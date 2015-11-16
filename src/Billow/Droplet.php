@@ -1,6 +1,7 @@
 <?php
 namespace Billow;
 use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Message\Response;
 
 /**
  * @author Matt Frost<mfrost.design@gmail.com>
@@ -43,11 +44,19 @@ class Droplet
         return $this->client;
     }
 
+    /**
+     * Method to create a new Digital Ocean Droplet
+     *
+     * @param \Billow\Droplets\Droplet $droplet
+     * @param Array $headers
+     * @return \GuzzleHttp\Message\Response
+     */
     public function create(Droplets\Droplet $droplet, Array $headers =[])
     {
-        if (!isset($headers['Content-type'])) {
+        if (!isset($headers['Content-type']) && !isset($headers['Content-Type'])) {
             $headers['Content-type'] = 'application/json';
         }
+
         $dropletJSON = $droplet->toJSON();
         $params = ['headers' => $headers, 'body' => $dropletJSON];
 
@@ -56,7 +65,13 @@ class Droplet
             $response = $client->post('droplets', $params);
             return $response;
         } catch (RequestException $e) {
-            exit('exception caught');
+            if ($e->hasResponse()) {
+                return $e->getResponse();
+            }
+
+            return new Response(
+                0
+            );
         }
     }
 }
