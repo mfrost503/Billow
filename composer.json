@@ -22,6 +22,11 @@
             "Billow\\": "src/Billow/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Billow\\Tests\\": "tests/"
+        }
+    },
     "require-dev": {
         "phpunit/phpunit": "^4.8"
     }
