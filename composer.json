@@ -1,0 +1,28 @@
+{
+    "name": "mfrost503/Billow",
+    "type": "library",
+    "license": "MIT",
+    "description": "Digital Ocean API Wrapper",
+    "keywords": ["API", "Digital Ocean", "Wrapper"],
+    "homepage": "https://github.com/mfrost503/Billow",
+    "authors": [
+        {
+            "name": "Matt Frost",
+            "email": "mfrost.design@gmail.com",
+            "homepage": "http://shortwhitebaldguy.com",
+            "role": "developer"
+        }
+    ],
+    "require": {
+        "guzzlehttp/guzzle": "^5.0",
+        "vlucas/phpdotenv": "^2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Billow\\": "src/Billow/"
+        }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^4.8"
+    }
+}
