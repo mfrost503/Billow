@@ -1,11 +1,14 @@
 <?php
-namespace Services\DigitalOcean;
+namespace Billow;
 use GuzzleHttp\Exception\RequestException;
 
 /**
- * @author Matt Frost<mattf@budgetdumpster.com>
- * @package Services
- * @subpackage DigitalOcean
+ * @author Matt Frost<mfrost.design@gmail.com>
+ * @package Billow
+ * @license http://opensource.org/licenses/MIT MIT
+ * @method setClient set the HTTP Client
+ * @method getClient retrieve or create an HTTP Client
+ * @method create create a droplet 
  */
 class Droplet
 {

@@ -1,11 +1,11 @@
 <?php
-namespace Services\DigitalOcean\Droplets;
+namespace Billow\Droplets;
 
 /**
- * @author Matt Frost<mattf@budgetdumpster.com>
- * @package Services
- * @subpackage DigitalOcean
+ * @author Matt Frost<mfrost.design@gmail.com>
+ * @package Billow
  * @subpackage Droplets
+ * @license http://opensource.org/licenses/MIT MIT
  */
 class Ubuntu extends Droplet implements DropletInterface
 {

@@ -1,11 +1,14 @@
 <?php
-namespace Services\DigitalOcean;
+namespace Billow;
 use GuzzleHttp\Client as HttpClient;
 use GuzzleHttp\Exception\RequestException;
 /**
- * @author Matt Frost<mattf@budgetdumpster.com>
- * @package Services
- * @subpackage DigitalOcean
+ * @author Matt Frost<mfrost.design@gmail.com>
+ * @package Billow 
+ * @license http://opensource.org/licenses/MIT MIT
+ * @method get extending the GuzzleHttp\Client::get method
+ * @method post extending the GuzzleHttp\Client::post method
+ * @const BASEURL baseurl for the DO API
  */
 class Client extends HttpClient
 {

@@ -1,11 +1,14 @@
 <?php
-namespace Services\DigitalOcean\Droplets;
+namespace Billow\Droplets;
 use RuntimeException;
 /**
- * @author Matt Frost<mattf@budgetdumpster.com
- * @package Services
- * @subpackage DigitalOcean
- * @subpackage Droplets
+ * @author Matt Frost<mfrost.design@gmail.com
+ * @package Billow
+ * @license http://opensource.org/licenses/MIT MIT
+ * @method validate ensure all required values are set
+ * @method toJson represent the droplet as JSON
+ * @method toArray represent the droplet as an Array
+ * @method setImage set the image name
  */
 abstract class Droplet 
 {
