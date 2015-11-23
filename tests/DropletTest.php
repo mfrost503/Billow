@@ -1,7 +1,7 @@
 <?php
 namespace Billow\Tests;
 use PHPUnit_Framework_TestCase;
-use Billow\Droplet;
+use Billow\DropletService;
 use Billow\Droplets\Ubuntu;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Message\Response;
@@ -55,7 +55,7 @@ class DropletTest extends PHPUnit_Framework_TestCase
      */
     public function testEnsureSetGetClientWorksCorrectly()
     {
-        $droplet = new Droplet();
+        $droplet = new DropletService();
         $droplet->setClient($this->mockClient);
         $client = $droplet->getClient();
         $this->assertSame($this->mockClient, $client, 'The returned client was not the same as the mock client');
@@ -66,7 +66,7 @@ class DropletTest extends PHPUnit_Framework_TestCase
      */
     public function testEnsureGetClientReturnsNewClientInstance()
     {
-        $droplet = new Droplet();
+        $droplet = new DropletService();
         $client = $droplet->getClient();
         $this->assertInstanceof('\Billow\Client', $client, 'The returned client is not a type \Billow\Client');
     }
@@ -97,7 +97,7 @@ class DropletTest extends PHPUnit_Framework_TestCase
             ->with('droplets', $client_params)
             ->will($this->returnValue($this->mockResponse));
 
-        $droplet = new Droplet();
+        $droplet = new DropletService();
         $droplet->setClient($this->mockClient);
         $response = $droplet->create($this->mockUbuntu, $headers);
         $this->assertSame($response, $this->mockResponse);
@@ -133,7 +133,7 @@ class DropletTest extends PHPUnit_Framework_TestCase
             ->with('droplets', $client_params)
             ->will($this->returnValue($this->mockResponse));
 
-        $droplet = new Droplet();
+        $droplet = new DropletService();
         $droplet->setClient($this->mockClient);
         $response = $droplet->create($this->mockUbuntu, $headers);
         $this->assertSame($response, $this->mockResponse);
@@ -180,7 +180,7 @@ class DropletTest extends PHPUnit_Framework_TestCase
             ->with('droplets', $client_params)
             ->will($this->throwException($this->mockException));
 
-        $droplet = new Droplet();
+        $droplet = new DropletService();
         $droplet->setClient($this->mockClient);
         $response = $droplet->create($this->mockUbuntu, $headers);
         $this->assertEquals(401, $response->getStatusCode(), 'Status code mismatched');
@@ -220,7 +220,7 @@ class DropletTest extends PHPUnit_Framework_TestCase
             ->with('droplets', $client_params)
             ->will($this->throwException($this->mockException));
 
-        $droplet = new Droplet();
+        $droplet = new DropletService();
         $droplet->setClient($this->mockClient);
         $response = $droplet->create($this->mockUbuntu, $headers);
 

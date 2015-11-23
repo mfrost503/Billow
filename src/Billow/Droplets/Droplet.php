@@ -13,6 +13,13 @@ use RuntimeException;
 abstract class Droplet 
 {
     /**
+     * ID for the droplet
+     *
+     * @var id
+     */
+    private $id;
+
+    /**
      * Name for the droplet
      *
      * @var string name
@@ -138,6 +145,10 @@ abstract class Droplet
         if (isset($boxData['privateNetworking']) && is_bool($boxData['privateNetworking'])) {
             $this->privateNetworking = $boxData['privateNetworking']; 
         }
+
+        if (isset($boxData['id'] && is_number($boxData['id'])) {
+            $this->id = $boxData['id'];
+        }
     }
 
     /**
@@ -158,6 +169,7 @@ abstract class Droplet
     public function toArray()
     {
         $data = [
+            'id' => $this->id,
             'name' => $this->name,
             'region' => $this->region,
             'size' => $this->size,
