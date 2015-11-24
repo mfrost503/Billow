@@ -146,7 +146,7 @@ abstract class Droplet
             $this->privateNetworking = $boxData['privateNetworking']; 
         }
 
-        if (isset($boxData['id'] && is_number($boxData['id'])) {
+        if (isset($boxData['id']) && is_number($boxData['id'])) {
             $this->id = $boxData['id'];
         }
     }
