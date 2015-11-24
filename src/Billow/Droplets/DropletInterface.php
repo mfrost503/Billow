@@ -11,10 +11,17 @@ namespace Billow\Droplets;
 interface DropletInterface
 {
     /**
-     * Method of converting the Droplet Object to JSON
+     * Method to convert the Droplet Object to JSON
      *
      * @return string
      */
     public function toJSON();
+
+    /**
+     * Method to conver the Droplet Objecto to an Array
+     *
+     * @return Array
+     */
+    public function toArray();
 }
 

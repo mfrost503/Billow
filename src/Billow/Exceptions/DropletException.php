@@ -1,12 +1,13 @@
 <?php
-namespace Billow\Droplets;
+namespace Billow\Exceptions;
+use Exception;
 
 /**
  * @author Matt Frost<mfrost.design@gmail.com>
  * @package Billow
- * @subpackage Droplets
+ * @subpackage Exceptions
  * @license http://opensource.org/licenses/MIT MIT
  */
-class Ubuntu extends Droplet implements DropletInterface
+class DropletException extends Exception
 {
 }

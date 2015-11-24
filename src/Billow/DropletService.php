@@ -1,7 +1,9 @@
 <?php
 namespace Billow;
-use Billow\Droplets\DropletInterface;
 use Billow\Droplets\DropletFactory;
+use Billow\Droplets\DropletInterface;
+use Billow\Exceptions\ProvisionException;
+use Billow\Exceptions\DropletException;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Message\Response;
 
@@ -12,6 +14,8 @@ use GuzzleHttp\Message\Response;
  * @method setClient set the HTTP Client
  * @method getClient retrieve or create an HTTP Client
  * @method create create a droplet 
+ * @method retrieve retrieve a droplet by id
+ * @method performAction perform a predefined action on a droplet
  */
 class DropletService
 {
@@ -79,15 +83,16 @@ class DropletService
     /**
      * Method to create a new Digital Ocean Droplet
      *
-     * @param \Billow\Droplets\Droplet $droplet
+     * @param Array $droplet
      * @param Array $headers
      * @return \GuzzleHttp\Message\Response
+     * @throws \Billow\Exceptions\ProvisionException
      */
-    public function create(Droplets\Droplet $droplet, Array $headers =[])
+    public function create(Array $dropletRequest, Array $headers =[])
     {
         $headers = $this->prepareHeaders($headers);
 
-        $dropletJSON = $droplet->toJSON();
+        $dropletJSON = json_encode($dropletRequest);
         $params = ['headers' => $headers, 'body' => $dropletJSON];
 
         $client = $this->getClient();
@@ -95,11 +100,14 @@ class DropletService
             $response = $client->post('droplets', $params);
             return $response;
         } catch (RequestException $e) {
+            $message = 'Failed to provision new droplet';
+            $code = 0;
             if ($e->hasResponse()) {
-                return $e->getResponse();
+                $response = $e->getResponse();
+                $message = $response->getBody();
+                $code = $response->getStatusCode();
             }
-
-            return new Response(0);
+            throw new ProvisionException($message, $code, $e);
         }
     }
 
@@ -109,6 +117,7 @@ class DropletService
      * @param int $dropletId
      * @param Array $headers
      * @return \Billow\Droplets\Droplet
+     * @throws \Billow\Exceptions\DropletException
      */
     public function retrieve($dropletId, Array $headers = [])
     {
@@ -120,11 +129,14 @@ class DropletService
             $factory = $this->getFactory();
             return $factory->getDroplet(json_decode($response->getBody(), true));
         } catch (RequestException $e) {
+            $message = 'Retrieval of droplet failed';
+            $code = 0;
             if ($e->hasResponse()) {
-                return $e->getResponse();
+                $response = $e->getResponse();
+                $message = $response->getBody();
+                $code = $response->getStatusCode();
             }
-
-            return new Response(0);
+            throw new DropletException($message, $code, $e);
         }
     }
 

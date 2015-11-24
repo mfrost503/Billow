@@ -19,11 +19,11 @@ class DropletFactory
      */
     public function getDroplet(Array $dropletInfo)
     {
-        if (!isset($dropletInfo['image'])) {
+        if (!isset($dropletInfo['droplet']['image']['distribution'])) {
             throw new InvalidArgumentException('Image information not found in droplet info');
         }
 
-        $image = $dropletInfo['image'];
+        $image = $dropletInfo['droplet']['image']['distribution'];
 
         if (stristr($image, 'ubuntu')) {
             return new Ubuntu($dropletInfo);
