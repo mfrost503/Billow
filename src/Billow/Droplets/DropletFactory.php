@@ -25,8 +25,25 @@ class DropletFactory
 
         $image = $dropletInfo['droplet']['image']['distribution'];
 
-        if (stristr($image, 'ubuntu')) {
-            return new Ubuntu($dropletInfo);
+        switch (strtolower($image)) {
+            case 'ubuntu':
+                return new Ubuntu($dropletInfo);
+                break;
+            case 'fedora':
+                return new Fedora($dropletInfo);
+                break;
+            case 'debian':
+                return new Debian($dropletInfo);
+                break;
+            case 'centos':
+                return new CentOS($dropletInfo);
+                break;
+            case 'coreos':
+                return new CoreOS($dropletInfo);
+                break;
+            case 'freebsd':
+                return new FreeBSD($dropletInfo);
+                break;
         }
 
         throw new RuntimeException('There is no droplet matching the image provided in the droplet info');
