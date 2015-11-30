@@ -16,6 +16,7 @@ use GuzzleHttp\Message\Response;
  * @method getClient retrieve or create an HTTP Client
  * @method create create a droplet 
  * @method retrieve retrieve a droplet by id
+ * @method retrieveAll retrieve a paginated list of droplets
  * @method performAction perform a predefined action on a droplet
  */
 class DropletService
@@ -128,9 +129,44 @@ class DropletService
         try {
             $response = $client->get('droplets/' . $dropletId, $params);
             $factory = $this->getFactory();
-            return $factory->getDroplet(json_decode($response->getBody(), true));
+            return $factory->getDroplet(json_decode($response->getBody()['droplet'], true));
         } catch (RequestException $e) {
             $message = 'Retrieval of droplet failed';
+            $code = 0;
+            if ($e->hasResponse()) {
+                $response = $e->getResponse();
+                $message = $response->getBody();
+                $code = $response->getStatusCode();
+            }
+            throw new DropletException($message, $code, $e);
+        }
+    }
+
+    /**
+     * Method to retrieve a paginated list of droplets
+     *
+     * @param Array headers
+     * @param int per_page
+     * @param int page
+     * @return Array
+     */
+    public function retrieveAll(Array $headers = [], $per_page = 25, $page = 1)
+    {
+        $headers = $this->prepareHeaders($headers);
+        $params = ['headers' => $headers];
+        $client = $this->getClient();
+        $endpoint = 'droplets?page='. $page .'&per_page=' . $per_page;
+        $dropletArray = [];
+        try {
+            $response = $client->get($endpoint, $params);
+            $factory = $this->getFactory();
+            $responseArray = json_decode($response->getBody(), true);
+            foreach ($responseArray['droplets'] as $droplet) {
+                $dropletArray[] = $factory->getDroplet($droplet);
+            }
+            return $dropletArray;
+        } catch(RequestException $e) {
+            $message = 'Retrieval of droplets failed';
             $code = 0;
             if ($e->hasResponse()) {
                 $response = $e->getResponse();

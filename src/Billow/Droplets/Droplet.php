@@ -140,7 +140,7 @@ abstract class Droplet
      */
     public function __construct(Array $boxData)
     {
-        foreach ($boxData['droplet'] as $key => $value) {
+        foreach ($boxData as $key => $value) {
             $this->$key = $value;
         }
     }
