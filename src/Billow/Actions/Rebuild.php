@@ -8,14 +8,14 @@ use InvalidArgumentException;
  * @subpackage Actions
  * @license http://opensource.org/licenses/MIT MIT
  */
-class Restore extends Action
+class Rebuild extends Action
 {
     /**
      * Action parameter
      *
      * @const ACTION
      */
-    const ACTION = 'enable_backups';
+    const ACTION = 'rebuild';
 
     /**
      * Action HTTP Method
@@ -25,23 +25,23 @@ class Restore extends Action
     const METHOD = 'POST';
 
     /**
-     * Image ID
+     * Image slug or ID
      *
-     * @var int $image
+     * @var mixed image
      */
     protected $image;
 
     /**
-     * Constructor for Restore Action
+     * Constructor for rebuild action
      *
-     * @param int image
+     * @param mixed image
+     * @throws \InvalidArgumentException
      */
     public function __construct($image)
     {
         if (!is_numeric($image) && !is_string($image)) {
-            throw new InvalidArgumentException('Image parameter must be an ID or a string');
+            throw new InvalidArgumentException("Image argument must be a slug or ID");
         }
-
         $this->image = $image;
     }
 
@@ -58,3 +58,4 @@ class Restore extends Action
         ]);
     }
 }
+

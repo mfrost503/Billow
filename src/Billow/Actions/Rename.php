@@ -8,14 +8,14 @@ use InvalidArgumentException;
  * @subpackage Actions
  * @license http://opensource.org/licenses/MIT MIT
  */
-class Restore extends Action
+class Rename extends Action
 {
     /**
      * Action parameter
      *
      * @const ACTION
      */
-    const ACTION = 'enable_backups';
+    const ACTION = 'rename';
 
     /**
      * Action HTTP Method
@@ -25,26 +25,25 @@ class Restore extends Action
     const METHOD = 'POST';
 
     /**
-     * Image ID
+     * Name that the droplet will be changed to
      *
-     * @var int $image
+     * @param string name
      */
-    protected $image;
+    protected $name;
 
     /**
-     * Constructor for Restore Action
+     * Constructor for the rename action
      *
-     * @param int image
+     * @param string name
+     * @throws \InvalidArgumentException
      */
-    public function __construct($image)
+    public function __construct($name)
     {
-        if (!is_numeric($image) && !is_string($image)) {
-            throw new InvalidArgumentException('Image parameter must be an ID or a string');
+        if (!is_string($name)) {
+            throw new InvalidArgumentException('Name argument must be a string');
         }
-
-        $this->image = $image;
+        $this->name = $name;
     }
-
     /**
      * Return the body of the request
      *
@@ -54,7 +53,8 @@ class Restore extends Action
     {
         return json_encode([
             'type' => self::ACTION,
-            'image' => $this->image
+            'name' => $this->name
         ]);
     }
 }
+

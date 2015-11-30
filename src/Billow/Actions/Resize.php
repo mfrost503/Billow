@@ -1,6 +1,5 @@
 <?php
 namespace Billow\Actions;
-use InvalidArgumentException;
 
 /**
  * @author Matt Frost<mfrost.design@gmail.com>
@@ -8,14 +7,14 @@ use InvalidArgumentException;
  * @subpackage Actions
  * @license http://opensource.org/licenses/MIT MIT
  */
-class Restore extends Action
+class Resize extends Action
 {
     /**
      * Action parameter
      *
      * @const ACTION
      */
-    const ACTION = 'enable_backups';
+    const ACTION = 'resize';
 
     /**
      * Action HTTP Method
@@ -25,24 +24,29 @@ class Restore extends Action
     const METHOD = 'POST';
 
     /**
-     * Image ID
+     * Size slug
      *
-     * @var int $image
+     * @var string size
      */
-    protected $image;
+    protected $size;
 
     /**
-     * Constructor for Restore Action
+     * Boolean to determine whether to increase disk size
      *
-     * @param int image
+     * @var bool disk
      */
-    public function __construct($image)
-    {
-        if (!is_numeric($image) && !is_string($image)) {
-            throw new InvalidArgumentException('Image parameter must be an ID or a string');
-        }
+    protected $disk;
 
-        $this->image = $image;
+    /**
+     * Constructor for the Resize Action
+     *
+     * @param bool disk
+     * @param string size
+     */
+    public function __construct($size, $disk = true)
+    {
+        $this->size = $size;
+        $this->disk = $disk;
     }
 
     /**
@@ -54,7 +58,9 @@ class Restore extends Action
     {
         return json_encode([
             'type' => self::ACTION,
-            'image' => $this->image
+            'disk' => $this->disk,
+            'size' => $this->size
         ]);
     }
 }
+

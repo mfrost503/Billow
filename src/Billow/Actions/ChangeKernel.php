@@ -8,14 +8,14 @@ use InvalidArgumentException;
  * @subpackage Actions
  * @license http://opensource.org/licenses/MIT MIT
  */
-class Restore extends Action
+class ChangeKernel extends Action
 {
     /**
      * Action parameter
      *
      * @const ACTION
      */
-    const ACTION = 'enable_backups';
+    const ACTION = 'change_kernel';
 
     /**
      * Action HTTP Method
@@ -25,24 +25,24 @@ class Restore extends Action
     const METHOD = 'POST';
 
     /**
-     * Image ID
+     * Unique number used to identify a specific kernel
      *
-     * @var int $image
+     * @var int kernel
      */
-    protected $image;
+    protected $kernel;
 
     /**
-     * Constructor for Restore Action
+     * Constructor for change kernel action
      *
-     * @param int image
+     * @param int kernel
+     * @throws \InvalidArgumentException
      */
-    public function __construct($image)
+    public function __construct($kernel)
     {
-        if (!is_numeric($image) && !is_string($image)) {
-            throw new InvalidArgumentException('Image parameter must be an ID or a string');
+        if (!is_int($kernel)) {
+            throw new InvalidArgumentException('Kernel argument must be an integer');
         }
-
-        $this->image = $image;
+        $this->kernel = $kernel;
     }
 
     /**
@@ -53,8 +53,8 @@ class Restore extends Action
     public function getBody()
     {
         return json_encode([
-            'type' => self::ACTION,
-            'image' => $this->image
+            'type' => self::ACTION
         ]);
     }
 }
+
