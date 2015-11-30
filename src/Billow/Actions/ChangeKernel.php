@@ -53,7 +53,8 @@ class ChangeKernel extends Action
     public function getBody()
     {
         return json_encode([
-            'type' => self::ACTION
+            'type' => self::ACTION,
+            'kernel' => $this->kernel
         ]);
     }
 }

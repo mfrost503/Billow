@@ -1,5 +1,6 @@
 <?php
 namespace Billow\Actions;
+use InvalidArgumentException;
 
 /**
  * @author Matt Frost<mfrost.design@gmail.com>
@@ -45,6 +46,14 @@ class Resize extends Action
      */
     public function __construct($size, $disk = true)
     {
+        if (!is_string($size)) {
+            throw new InvalidArgumentException('The size parameter must be a string (slug)');
+        }
+
+        if (!is_bool($disk)) {
+            throw new InvalidArgumentException('The disk parameter must be a boolean');
+        }
+
         $this->size = $size;
         $this->disk = $disk;
     }
