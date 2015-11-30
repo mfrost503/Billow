@@ -84,7 +84,7 @@ class DropletService
     /**
      * Method to create a new Digital Ocean Droplet
      *
-     * @param Array $droplet
+     * @param Array $dropletRequest
      * @param Array $headers
      * @return \GuzzleHttp\Message\Response
      * @throws \Billow\Exceptions\ProvisionException
