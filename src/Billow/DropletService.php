@@ -1,6 +1,7 @@
 <?php
 namespace Billow;
 use Billow\Droplets\DropletFactory;
+use Billow\Actions\ActionInterface;
 use Billow\Droplets\DropletInterface;
 use Billow\Exceptions\ProvisionException;
 use Billow\Exceptions\DropletException;
@@ -143,12 +144,12 @@ class DropletService
     /**
      * Method to perform an action on a Digital Ocean Droplet
      *
-     * @param int $droplet_id
+     * @param \Billow\Droplets\DropletInterface
      * @param \Billow\Actions\ActionInterface $action
      * @param Array $headers
      * @return \GuzzleHttp\Message\Response
      */
-    public function performAction(Droplet $droplet, ActionInterface $action, Array $headers = [])
+    public function performAction(DropletInterface $droplet, ActionInterface $action, Array $headers = [])
     {
         $dropletValues = $droplet->toArray();   
         $id = $dropletValues['id'];

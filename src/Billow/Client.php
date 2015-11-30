@@ -38,7 +38,7 @@ class Client extends HttpClient
     {
         try {
             $response = parent::get($url, $options);
-             return $response->getBody();
+             return $response;
         } catch (RequestException $e) {
             $response = null;
             if ($e->hasResponse()) {
@@ -64,7 +64,7 @@ class Client extends HttpClient
     {
         try {
             $response = parent::post($url, $options);
-             return $response->getBody();
+             return $response();
         } catch (RequestException $e) {
             $response = null;
             if ($e->hasResponse()) {
