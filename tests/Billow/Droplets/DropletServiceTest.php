@@ -456,4 +456,24 @@ class DropletServiceTest extends PHPUnit_Framework_TestCase
         $response = $service->performAction($droplet, $mockAction, $headers);    
         $this->assertSame($response, $this->mockResponse);
     }
+
+    /**
+     * Test to ensure that a factory can be set
+     */
+    public function testEnsureAFactoryCanBeSet()
+    {
+        $factory = new DropletFactory();
+        $service = new DropletService();
+        $service->setFactory($factory);
+        $this->assertSame($service->getFactory(), $factory);
+    }
+
+    /**
+     * Test to ensure Factory is created if one is not provided
+     */
+    public function testEnsureFactoryIsCreatedIfOneIsNotProvided()
+    {
+        $service = new DropletService();
+        $this->assertInstanceOf('\Billow\Droplets\DropletFactory', $service->getFactory());
+    }
 }
