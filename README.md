@@ -1,5 +1,7 @@
 # Billow
 
+[![Build Status](https://travis-ci.org/mfrost503/Billow.svg?branch=master)](https://travis-ci.org/mfrost503/Billow)
+
 Billow is a Digital Ocean API wrapper that allows you to retrieve information, provision
 droplets (Virtual Machines) and perform actions on existing virtual machines. There are a 
 couple different ways to interact with this library; convenience classes and direct client usage.
