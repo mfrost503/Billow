@@ -73,6 +73,27 @@ class Client implements ClientInterface
     }
 
     /**
+     * Method to send a request object via HTTP and retrieve a response
+     *
+     * @param mixed $request
+     * @return \GuzzleHttp\Message\Response
+     * @throws \GuzzleHttp\Exception\RequestException
+     * @throws \Exception
+     */
+    public function send($request)
+    {
+        $this->getHttpClient();
+        try {
+            $response = $this->httpClient->send($request);
+            return $response;
+        } catch (RequestException $e) {
+            throw $e;
+        } catch (Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
      * Method to set the HttpClient
      *
      * @param \GuzzleHttp\Client

@@ -31,7 +31,7 @@ class ClientTest extends PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->mockClient = $this->getMock('\GuzzleHttp\Client', ['get', 'post']);
+        $this->mockClient = $this->getMock('\GuzzleHttp\Client', ['get', 'post','send']);
         $this->mockResponse = $this->getMockBuilder('\GuzzleHttp\Message\Response')
             ->disableOriginalConstructor()
             ->getMock();
@@ -185,5 +185,68 @@ class ClientTest extends PHPUnit_Framework_TestCase
         $client = new Client();
         $client->setHttpClient($this->mockClient);
         $client->post($url, $options);
+    }
+
+    /**
+     * Test to ensure that the send method is being execute properly
+     */
+    public function testEnsureSendMethodWorksCorrectly()
+    {
+        $request = $this->getMockBuilder('\GuzzleHttp\Message\Request')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->mockClient->expects($this->once())
+            ->method('send')
+            ->with($request)
+            ->will($this->returnValue($this->mockResponse));
+
+        $client = new Client();
+        $client->setHttpClient($this->mockClient);
+        $response = $client->send($request);
+        $this->assertInstanceOf('\GuzzleHttp\Message\ResponseInterface', $response);
+        $this->assertSame($this->mockResponse, $response);
+    }
+
+    /**
+     * Test to ensure that if a Request Exception is thrown that client rethrows it
+     *
+     * @expectedException \GuzzleHttp\Exception\RequestException
+     */
+    public function testEnsureSendRequestExceptionIsRethrown()
+    {
+        $request = $this->getMockBuilder('\GuzzleHttp\Message\Request')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->mockClient->expects($this->once())
+            ->method('send')
+            ->with($request)
+            ->will($this->throwException($this->mockException));
+
+        $client = new Client();
+        $client->setHttpClient($this->mockClient);
+        $client->send($request);
+    }
+
+    /**
+     * Test to ensure that if a Request Exception is thrown that client rethrows it
+     *
+     * @expectedException \Exception
+     */
+    public function testEnsureSendExceptionIsRethrown()
+    {
+        $request = $this->getMockBuilder('\GuzzleHttp\Message\Request')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->mockClient->expects($this->once())
+            ->method('send')
+            ->with($request)
+            ->will($this->throwException(new \Exception));
+
+        $client = new Client();
+        $client->setHttpClient($this->mockClient);
+        $client->send($request);
     }
 }

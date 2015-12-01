@@ -131,7 +131,6 @@ class DropletService
             $response = $client->get('droplets/' . $dropletId, $params);
             $factory = $this->getFactory();
             $dropletArray = json_decode($response->getBody(), true);
-            $test = 1 + 1;
             return $factory->getDroplet($dropletArray['droplet']);
         } catch (RequestException $e) {
             $message = 'Retrieval of droplet failed';

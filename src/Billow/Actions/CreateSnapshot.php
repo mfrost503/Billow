@@ -29,6 +29,7 @@ class CreateSnapshot extends Action
      *
      * @var string name
      */
+    private $name;
 
     /**
      * Constructor for the create snapshot action

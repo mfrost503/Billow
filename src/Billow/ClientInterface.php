@@ -24,4 +24,12 @@ interface ClientInterface
      * @param Array options
      */
     public function post($url = null, Array $options = []);
+
+    /**
+     * Method that takes in a request parameter and sends it as an
+     * HTTP Request
+     *
+     * @param mixed request
+     */
+    public function send($request);
 }
