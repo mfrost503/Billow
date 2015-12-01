@@ -24,7 +24,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Billow\\Tests\\": "tests/"
+            "Billow\\Tests\\": "tests/Billow"
         }
     },
     "require-dev": {

@@ -129,7 +129,9 @@ class DropletService
         try {
             $response = $client->get('droplets/' . $dropletId, $params);
             $factory = $this->getFactory();
-            return $factory->getDroplet(json_decode($response->getBody()['droplet'], true));
+            $dropletArray = json_decode($response->getBody(), true);
+            $test = 1 + 1;
+            return $factory->getDroplet($dropletArray['droplet']);
         } catch (RequestException $e) {
             $message = 'Retrieval of droplet failed';
             $code = 0;
@@ -187,6 +189,7 @@ class DropletService
      */
     public function performAction(DropletInterface $droplet, ActionInterface $action, Array $headers = [])
     {
+        $headers = $this->prepareHeaders($headers);
         $dropletValues = $droplet->toArray();   
         $id = $dropletValues['id'];
         $action->setId($id);

@@ -25,7 +25,7 @@ class DropletFactoryTest extends PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $data = file_get_contents('tests/fixtures/ubuntu-retrieve-droplet-response.json');
+        $data = file_get_contents('tests/Billow/fixtures/ubuntu-retrieve-droplet-response.json');
         $this->ubuntuData = json_decode($data, true);
     }
 
@@ -44,7 +44,7 @@ class DropletFactoryTest extends PHPUnit_Framework_TestCase
     public function testEnsureUbuntuBoxIsReturned()
     {
         $factory = new DropletFactory();
-        $image = $factory->getDroplet($this->ubuntuData);
+        $image = $factory->getDroplet($this->ubuntuData['droplet']);
         $this->assertInstanceOf('\Billow\Droplets\Droplet', $image);
         $this->assertInstanceOf('\Billow\Droplets\Ubuntu', $image);
     }
@@ -65,7 +65,7 @@ class DropletFactoryTest extends PHPUnit_Framework_TestCase
     /**
      * Test to ensure that if an unsupported box is provided a runtime exception is thrown
      *
-     * @expectedException \RuntimeException
+     * @expectedException \InvalidArgumentException
      */
     public function testUnsupportedBoxThrowsException()
     {
@@ -87,5 +87,47 @@ class DropletFactoryTest extends PHPUnit_Framework_TestCase
         ];
         $factory = new DropletFactory();
         $image = $factory->getDroplet($data);
+    }
+
+    /**
+     * Test ensure that all the boxes are created correctly
+     *
+     * @dataProvider dropletProvider
+     */
+    public function testEnsureAllBoxTypesAreCreatedCorrectly($distribution, $expectedType)
+    {
+        $factory = new DropletFactory();
+        $data = $this->ubuntuData;
+        $data['droplet']['image']['distribution'] = $distribution;
+        $droplet = $factory->getDroplet($data['droplet']);
+        $this->assertInstanceOf($expectedType, $droplet);
+    }  
+
+    /**
+     * Test ensure that a runtime exception is thrown if an unknown distro is provided
+     *
+     * @expectedException \RuntimeException
+     * @expectedExceptionMessage There is no droplet matching the image provided in the droplet info
+     */
+    public function testEnsureRuntimeExceptionIsThrownForUnknownDistro()
+    {
+        $factory = new DropletFactory();
+        $data = $this->ubuntuData;
+        $data['droplet']['image']['distribution'] = 'Made up distro';
+        $droplet = $factory->getDroplet($data['droplet']);
+    }
+
+    /**
+     * The Droplet Provider to provide distributions and expected types
+     */
+    public function dropletProvider()
+    {
+        return [
+            ['fedora', '\Billow\Droplets\Fedora'],
+            ['debian', '\Billow\Droplets\Debian'],
+            ['centos', '\Billow\Droplets\CentOS'],
+            ['coreos', '\Billow\Droplets\CoreOS'],
+            ['freebsd','\Billow\Droplets\FreeBSD']
+        ];
     }
 }

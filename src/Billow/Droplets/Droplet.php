@@ -130,7 +130,6 @@ abstract class Droplet
      * @var array networks
      */
     protected $networks;
-    
 
     /**
      * Constructor - this is a value object, so values must be set

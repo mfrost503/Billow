@@ -3,6 +3,8 @@ namespace Billow\Tests;
 use PHPUnit_Framework_TestCase;
 use Billow\DropletService;
 use Billow\Droplets\Ubuntu;
+use Billow\Droplets\DropletFactory;
+use Billow\Actions\EnableBackups;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Message\Response;
 
@@ -12,7 +14,7 @@ use GuzzleHttp\Message\Response;
  * @package Billow
  * @subpackage Tests
  */
-class DropletTest extends PHPUnit_Framework_TestCase
+class DropletServiceTest extends PHPUnit_Framework_TestCase
 {
     /**
      * @var \Billow\Client $mockClient
@@ -40,11 +42,16 @@ class DropletTest extends PHPUnit_Framework_TestCase
     private $ubuntuData;
 
     /**
+     * @var string
+     */
+    private $retrieveAllData;
+
+    /**
      * Setup Method
      */
     protected function setUp()
     {
-        $this->mockClient = $this->getMock('\Billow\Client', ['get', 'post']);
+        $this->mockClient = $this->getMock('\Billow\Client', ['get', 'post', 'send']);
         $this->mockUbuntu = $this->getMockBuilder('\Billow\Droplets\Ubuntu')
             ->setMethods(['toJson'])
             ->disableOriginalConstructor()
@@ -57,7 +64,8 @@ class DropletTest extends PHPUnit_Framework_TestCase
             ->setMethods(['hasResponse', 'getResponse', 'getCode'])
             ->disableOriginalConstructor()
             ->getMock();
-        $this->ubuntuData = file_get_contents('tests/fixtures/ubuntu-retrieve-droplet-response.json');
+        $this->ubuntuData = file_get_contents('tests/Billow/fixtures/ubuntu-retrieve-droplet-response.json');
+        $this->retrieveAllData = file_get_contents('tests/Billow/fixtures/retrieve-all-response.json');
     }
 
     /**
@@ -70,6 +78,7 @@ class DropletTest extends PHPUnit_Framework_TestCase
         unset($this->mockResponse);
         unset($this->mockException);
         unset($this->ubuntuData);
+        unset($this->retrieveAllData);
     }
 
     /**
@@ -327,5 +336,124 @@ class DropletTest extends PHPUnit_Framework_TestCase
         $service = new DropletService();
         $service->setClient($this->mockClient);
         $service->retrieve($id, $headers);
+    }
+
+    /**
+     * Test to sure retrieve all gathers a collection of boxes and outputs them
+     */
+    public function testEnsureRetrieveAllReturnsAnArrayOfBoxes()
+    {
+        $page = 1;
+        $per_page = 5;
+        $headers = [
+            'Content-type' => 'application/json',
+            'Authorization' => 'Bearer 123daecdb2945'
+        ];
+
+        $this->mockResponse->expects($this->once())
+            ->method('getBody')
+            ->will($this->returnValue($this->retrieveAllData));
+
+        $this->mockClient->expects($this->once())
+            ->method('get')
+            ->with("droplets?page=$page&per_page=$per_page", ['headers' => $headers])
+            ->will($this->returnValue($this->mockResponse));
+
+        $service = new DropletService();
+        $service->setClient($this->mockClient);
+        $droplets = $service->retrieveAll($headers, $per_page, $page);
+        $this->assertInternalType('array', $droplets);
+        $this->assertContainsOnlyInstancesOf('\Billow\Droplets\Droplet', $droplets);
+    }
+
+    /**
+     * Test to ensure that a RequestException with a response throws a droplet exception
+     *
+     * @expectedException \Billow\Exceptions\DropletException
+     */
+    public function testRequestExceptionWithResponseThrowsDropletException()
+    {
+        $page = 1;
+        $per_page = 5;
+        $headers = ['Content-type' => 'application/json'];
+
+        $this->mockResponse->expects($this->once())
+            ->method('getBody')
+            ->will($this->returnValue('Unauthorized Request'));
+        $this->mockResponse->expects($this->once())
+            ->method('getStatusCode')
+            ->will($this->returnValue(401));
+        $this->mockException->expects($this->once())
+            ->method('hasResponse')
+            ->will($this->returnValue(true));
+        $this->mockException->expects($this->once())
+            ->method('getResponse')
+            ->will($this->returnValue($this->mockResponse));
+        $this->mockClient->expects($this->once())
+            ->method('get')
+            ->with("droplets?page=$page&per_page=$per_page", ['headers' => $headers])
+            ->will($this->throwException($this->mockException));
+
+        $service = new DropletService();
+        $service->setClient($this->mockClient);
+        $droplets = $service->retrieveAll($headers, $per_page, $page);
+    }
+
+    /**
+     * Test to ensure that a RequestException with no response throws a droplet exception
+     *
+     * @expectedException \Billow\Exceptions\DropletException
+     * @expectedExceptionMessage Retrieval of droplets failed
+     * @expectedExceptionCode 0
+     */
+    public function testRequestExceptionWithNoResponseThrowsDropletException()
+    {
+        $page = 1;
+        $per_page = 5;
+        $headers = ['Content-type' => 'application/json'];
+
+        $this->mockException->expects($this->once())
+            ->method('hasResponse')
+            ->will($this->returnValue(false));
+        $this->mockClient->expects($this->once())
+            ->method('get')
+            ->with("droplets?page=$page&per_page=$per_page", ['headers' => $headers])
+            ->will($this->throwException($this->mockException));
+
+        $service = new DropletService();
+        $service->setClient($this->mockClient);
+        $droplets = $service->retrieveAll($headers, $per_page, $page);
+    }
+
+    /**
+     * Test to ensure that the call to perform an action works correctly
+     */
+    public function testPerformActionWorksSuccessfully()
+    {
+        $factory = new DropletFactory();
+        $data = json_decode($this->ubuntuData, true);        
+        $droplet = $factory->getDroplet($data['droplet']);
+        $headers = ['Content-type' => 'application/json'];
+
+        $mockRequest = $this->getMockBuilder('\GuzzleHttp\Message\Request')
+            ->disableOriginalConstructor()
+            ->getMock();
+        $mockAction = $this->getMock('\Billow\Actions\EnableBackups', ['getRequest', 'getBody']);
+        $mockAction->expects($this->once())
+            ->method('getBody')
+            ->will($this->returnValue(json_encode(['type'=>'enable_backups'])));
+        $mockAction->expects($this->once())
+            ->method('getRequest')
+            ->with($headers, json_encode(['type'=>'enable_backups']))
+            ->will($this->returnValue($mockRequest));
+        $this->mockClient->expects($this->once())
+            ->method('send')
+            ->with($mockRequest)
+            ->will($this->returnValue($this->mockResponse));
+
+        $service = new DropletService();
+        $service->setClient($this->mockClient);
+        $response = $service->performAction($droplet, $mockAction, $headers);    
+        $this->assertSame($response, $this->mockResponse);
     }
 }
