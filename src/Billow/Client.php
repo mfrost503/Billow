@@ -1,8 +1,9 @@
 <?php
 namespace Billow;
+use Exception;
 use GuzzleHttp\Client as HttpClient;
 use GuzzleHttp\Exception\RequestException;
-use Exception;
+use GuzzleHttp\Message\RequestInterface;
 
 /**
  * @author Matt Frost<mfrost.design@gmail.com>
@@ -10,6 +11,9 @@ use Exception;
  * @license http://opensource.org/licenses/MIT MIT
  * @method get extending the GuzzleHttp\Client::get method
  * @method post extending the GuzzleHttp\Client::post method
+ * @method send extending the GuzzleHttp\Client::send method
+ * @method getHttpClient return or create an HTTP Client to send requests
+ * @method setHttpClient set the HTTP Client with an instance of ClientInterface
  * @const BASEURL baseurl for the DO API
  */
 class Client implements ClientInterface
@@ -33,7 +37,7 @@ class Client implements ClientInterface
      *
      * @param $url string
      * @param Array $options
-     * @return string
+     * @return \GuzzleHttp\Message\ResponseInterface 
      * @throws \GuzzleHttp\Exception\RequestException
      * @throws \Exception
      */
@@ -55,7 +59,7 @@ class Client implements ClientInterface
      *
      * @param $url string
      * @param Array $options
-     * @return string
+     * @return \GuzzleHttp\Message\ResponseInterface 
      * @throws \GuzzleHttp\Exception\RequestException
      * @throws \Exception
      */
@@ -75,12 +79,12 @@ class Client implements ClientInterface
     /**
      * Method to send a request object via HTTP and retrieve a response
      *
-     * @param mixed $request
-     * @return \GuzzleHttp\Message\Response
+     * @param \GuzzleHttp\Message\RequestInterface $request
+     * @return \GuzzleHttp\Message\ResponseInterface
      * @throws \GuzzleHttp\Exception\RequestException
      * @throws \Exception
      */
-    public function send($request)
+    public function send(RequestInterface $request)
     {
         $this->getHttpClient();
         try {
@@ -98,7 +102,7 @@ class Client implements ClientInterface
      *
      * @param \GuzzleHttp\Client
      */
-    public function setHttpClient(\GuzzleHttp\Client $client)
+    public function setHttpClient(Client $client)
     {
         $this->httpClient = $client;
     }

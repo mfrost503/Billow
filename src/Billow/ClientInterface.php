@@ -1,5 +1,6 @@
 <?php
 namespace Billow;
+use GuzzleHttp\Message\RequestInterface;
 
 /**
  * @author Matt Frost<mfrost.design@gmail.com>
@@ -29,7 +30,7 @@ interface ClientInterface
      * Method that takes in a request parameter and sends it as an
      * HTTP Request
      *
-     * @param mixed request
+     * @param \GuzzleHttp\Message\RequestInterface request
      */
-    public function send($request);
+    public function send(RequestInterface $request);
 }
