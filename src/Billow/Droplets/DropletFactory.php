@@ -9,7 +9,7 @@ use RuntimeException;
  * @subpackage Droplets
  * @license http://opensource.org/licenses/MIT MIT
  */
-class DropletFactory
+class DropletFactory implements DropletFactoryInterface
 {
     /**
      * Method to retrieve the proper type of Droplet based on parameter

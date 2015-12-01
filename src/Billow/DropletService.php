@@ -1,6 +1,7 @@
 <?php
 namespace Billow;
 use Billow\Droplets\DropletFactory;
+use Billow\Droplets\DropletFactoryInterface;
 use Billow\Actions\ActionInterface;
 use Billow\Droplets\DropletInterface;
 use Billow\Exceptions\ProvisionException;
@@ -24,23 +25,23 @@ class DropletService
     /**
      * Droplet Factory
      *
-     * @var \Billow\Droplets\DropletFactory
+     * @var \Billow\Droplets\DropletFactoryInterface
      */
     private $factory;
 
     /**
      * Client to make http requests
      *
-     * @var Client
+     * @var \Billow\ClientInterface
      */
     private $client;
 
     /**
      * Method to set factory
      *
-     * @param \Billow\Droplets\DropletFactory $factory
+     * @param \Billow\Droplets\DropletFactoryInterface $factory
      */
-    public function setFactory(DropletFactory $factory)
+    public function setFactory(DropletFactoryInterface $factory)
     {
         $this->factory = $factory;
     }
@@ -48,7 +49,7 @@ class DropletService
     /**
      * Method to retrieve or instantiate a Droplet Factory
      *
-     * @return \Billow\Droplets\DropletFactory
+     * @return \Billow\Droplets\DropletFactoryInterface
      */
     public function getFactory()
     {
@@ -61,9 +62,9 @@ class DropletService
     /**
      * Method to set client
      *
-     * @param Client $client
+     * @param \Billow\ClientInterface $client
      */
-    public function setClient(Client $client)
+    public function setClient(ClientInterface $client)
     {
         $this->client = $client;
     }
@@ -72,7 +73,7 @@ class DropletService
      * Method to retrieve set client or generate
      * a new client if one is not set
      *
-     * @return Client
+     * @return \Billow\ClientInterface
      */
     public function getClient()
     {

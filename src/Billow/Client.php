@@ -12,7 +12,7 @@ use Exception;
  * @method post extending the GuzzleHttp\Client::post method
  * @const BASEURL baseurl for the DO API
  */
-class Client
+class Client implements ClientInterface
 {
     /**
      * Constant to represent the base string of the API calls
@@ -37,7 +37,7 @@ class Client
      * @throws \GuzzleHttp\Exception\RequestException
      * @throws \Exception
      */
-    public function get($url = null, $options = [])
+    public function get($url = null, Array $options = [])
     {
         $this->getHttpClient();
         try {
@@ -59,7 +59,7 @@ class Client
      * @throws \GuzzleHttp\Exception\RequestException
      * @throws \Exception
      */
-    public function post($url = NULL, array $options = [])
+    public function post($url = null, Array $options = [])
     {
         $this->getHttpClient();
         try {
