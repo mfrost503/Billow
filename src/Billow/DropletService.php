@@ -7,7 +7,6 @@ use Billow\Droplets\DropletInterface;
 use Billow\Exceptions\ProvisionException;
 use Billow\Exceptions\DropletException;
 use GuzzleHttp\Exception\RequestException;
-use GuzzleHttp\Message\Response;
 
 /**
  * @author Matt Frost<mfrost.design@gmail.com>
@@ -88,7 +87,7 @@ class DropletService
      *
      * @param Array $dropletRequest
      * @param Array $headers
-     * @return \GuzzleHttp\Message\Response
+     * @return \GuzzleHttp\Message\ResponseInterface
      * @throws \Billow\Exceptions\ProvisionException
      */
     public function create(Array $dropletRequest, Array $headers =[])
@@ -185,7 +184,7 @@ class DropletService
      * @param \Billow\Droplets\DropletInterface
      * @param \Billow\Actions\ActionInterface $action
      * @param Array $headers
-     * @return \GuzzleHttp\Message\Response
+     * @return \GuzzleHttp\Message\ResponseInterface
      */
     public function performAction(DropletInterface $droplet, ActionInterface $action, Array $headers = [])
     {
