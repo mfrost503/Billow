@@ -9,9 +9,11 @@ the library with the convenience classes and directly with the client.
 
 ### Client
 
-`Billow\Client` is a very basic wrapper for `GuzzleHttp\Client`, which sets the base url for 
-all Digital Ocean V2 API requests. The client can be instantiated and used as a stand alone 
-client or can be utilized as part of the convenience classes.
+`Billow\Client` acts as an intermediary between Billow and an HTTP Client. By default,
+`Billow\Client` uses Guzzle 5.3 but it does make use of `Billow\ClientInterface` which allows
+you to create your own Client implementations. If you wanted to use Guzzle 6, it would be very
+easy to write a client that implements `Billow\ClientInterface` and write the implementations for the
+`get` and `post` methods to suit your needs.
 
 ### DropletService
 
