@@ -2,6 +2,8 @@
 namespace Billow;
 use GuzzleHttp\Client as HttpClient;
 use GuzzleHttp\Exception\RequestException;
+use Exception;
+
 /**
  * @author Matt Frost<mfrost.design@gmail.com>
  * @package Billow 
@@ -10,7 +12,7 @@ use GuzzleHttp\Exception\RequestException;
  * @method post extending the GuzzleHttp\Client::post method
  * @const BASEURL baseurl for the DO API
  */
-class Client extends HttpClient
+class Client
 {
     /**
      * Constant to represent the base string of the API calls
@@ -20,12 +22,11 @@ class Client extends HttpClient
     const BASEURL = 'https://api.digitalocean.com/v2/';
 
     /**
-     * Constructor to configure the Guzzle Client
+     * An HTTP Client to perform the HTTP Requests
+     *
+     * @var \GuzzleHttp\Client
      */
-    public function __construct()
-    {
-        parent::__construct(['base_url' => self::BASEURL]);
-    }
+    private $httpClient;
     
     /**
      * Wrapper for the GuzzleHttp\Client::get() method
@@ -33,24 +34,20 @@ class Client extends HttpClient
      * @param $url string
      * @param Array $options
      * @return string
+     * @throws \GuzzleHttp\Exception\RequestException
+     * @throws \Exception
      */
     public function get($url = null, $options = [])
     {
+        $this->getHttpClient();
         try {
-            $response = parent::get($url, $options);
-             return $response;
+            $response = $this->httpClient->get($url, $options);
+            return $response;
         } catch (RequestException $e) {
-            $response = null;
-            if ($e->hasResponse()) {
-                $response = $e->getResponse();
-            }
-            return [
-                'message' => $e->getMessage(),
-                'status_code' => $e->getCode(),
-                'request' => $e->getRequest(),
-                'response' => $response
-            ];
-        } 
+            throw $e;
+        } catch (Exception $e) {
+            throw $e;
+        }
     }
 
     /**
@@ -59,23 +56,42 @@ class Client extends HttpClient
      * @param $url string
      * @param Array $options
      * @return string
+     * @throws \GuzzleHttp\Exception\RequestException
+     * @throws \Exception
      */
     public function post($url = NULL, array $options = [])
     {
+        $this->getHttpClient();
         try {
-            $response = parent::post($url, $options);
-             return $response;
+            $response = $this->httpClient->post($url, $options);
+            return $response;
         } catch (RequestException $e) {
-            $response = null;
-            if ($e->hasResponse()) {
-                $response = $e->getResponse();
-            }
-            return [
-                'message' => $e->getMessage(),
-                'status_code' => $e->getCode(),
-                'request' => $e->getRequest(),
-                'response' => $response
-            ];
-        } 
+            throw $e;
+        } catch (Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
+     * Method to set the HttpClient
+     *
+     * @param \GuzzleHttp\Client
+     */
+    public function setHttpClient(\GuzzleHttp\Client $client)
+    {
+        $this->httpClient = $client;
+    }
+
+    /**
+     * Method to retrieve or instantiate an Http Client
+     *
+     * @return \GuzzleHttp\Client
+     */
+    public function getHttpClient()
+    {
+        if (!isset($this->httpClient)) {
+            $this->httpClient = new HttpClient(['base_url' => self::BASEURL]);
+        }
+        return $this->httpClient;
     }
 } 
