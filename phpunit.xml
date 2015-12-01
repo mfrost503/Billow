@@ -18,4 +18,10 @@
             <directory>./vendor/</directory>
         </blacklist>
     </filter>
+
+    <filter>
+        <whitelist processUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">src/Billow</directory>
+        </whitelist>
+    </filter>
 </phpunit>
