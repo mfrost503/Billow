@@ -27,7 +27,7 @@ class DropletTest extends PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $data = file_get_contents('tests/Billow/Fixtures/ubuntu-retrieve-droplet-response.json');
+        $data = file_get_contents('tests/Billow/fixtures/ubuntu-retrieve-droplet-response.json');
         $this->ubuntuData = json_decode($data, true);
         $this->droplet = new Ubuntu($this->ubuntuData['droplet']);
     }
