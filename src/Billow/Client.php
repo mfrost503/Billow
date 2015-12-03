@@ -102,7 +102,7 @@ class Client implements ClientInterface
      *
      * @param \GuzzleHttp\Client
      */
-    public function setHttpClient(Client $client)
+    public function setHttpClient(HttpClient $client)
     {
         $this->httpClient = $client;
     }
