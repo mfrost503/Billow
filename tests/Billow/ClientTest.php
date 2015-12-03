@@ -31,7 +31,7 @@ class ClientTest extends PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->mockClient = $this->getMock('\Billow\Client', ['get', 'post','send']);
+        $this->mockClient = $this->getMock('\GuzzleHttp\Client', ['get', 'post','send']);
         $this->mockResponse = $this->getMockBuilder('\GuzzleHttp\Message\Response')
             ->disableOriginalConstructor()
             ->getMock();
