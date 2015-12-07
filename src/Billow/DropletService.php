@@ -166,7 +166,7 @@ class DropletService
             $factory = $this->getFactory();
             $responseArray = json_decode($response->getBody(), true);
             foreach ($responseArray['droplets'] as $droplet) {
-                $dropletArray[] = $factory->getDroplet($droplet);
+                $dropletArray['droplets'][] = $factory->getDroplet($droplet);
             }
             $dropletArray['meta'] = $responseArray['meta'];
             $dropletArray['links'] = $responseArray['links'];
