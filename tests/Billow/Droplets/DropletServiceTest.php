@@ -362,8 +362,8 @@ class DropletServiceTest extends PHPUnit_Framework_TestCase
         $service = new DropletService();
         $service->setClient($this->mockClient);
         $droplets = $service->retrieveAll($headers, $per_page, $page);
-        $this->assertInternalType('array', $droplets);
-        $this->assertContainsOnlyInstancesOf('\Billow\Droplets\Droplet', $droplets);
+        $this->assertInternalType('array', $droplets['droplets']);
+        $this->assertContainsOnlyInstancesOf('\Billow\Droplets\Droplet', $droplets['droplets']);
     }
 
     /**

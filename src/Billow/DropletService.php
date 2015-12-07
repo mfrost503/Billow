@@ -158,6 +158,9 @@ class DropletService
         $client = $this->getClient();
         $endpoint = 'droplets?page='. $page .'&per_page=' . $per_page;
         $dropletArray = [];
+        $dropletArray['droplets'] = [];
+        $dropletArray['meta'] = [];
+        $dropletArray['links'] = [];
         try {
             $response = $client->get($endpoint, $params);
             $factory = $this->getFactory();
@@ -165,6 +168,8 @@ class DropletService
             foreach ($responseArray['droplets'] as $droplet) {
                 $dropletArray[] = $factory->getDroplet($droplet);
             }
+            $dropletArray['meta'] = $responseArray['meta'];
+            $dropletArray['links'] = $responseArray['links'];
             return $dropletArray;
         } catch(RequestException $e) {
             $message = 'Retrieval of droplets failed';
