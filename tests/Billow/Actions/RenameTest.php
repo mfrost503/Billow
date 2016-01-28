@@ -16,7 +16,7 @@ class RenameTest extends PHPUnit_Framework_TestCase
      */
     public function testEnsureRequestCreatedSuccessfullyWithName()
     {
-        $rename = new Rename('my-renamed-server');
+        $rename = new Rename(['name' => 'my-renamed-server']);
         $rename->setId(12345);
         $headers = [
             'Content-type' => 'application/json',
@@ -40,7 +40,7 @@ class RenameTest extends PHPUnit_Framework_TestCase
      */
     public function testEnsureRuntimeExceptionThrownIfIdNotSet()
     {
-        $rename = new Rename('my-renamed-server');
+        $rename = new Rename(['name' => 'my-renamed-server']);
         $rename->getRequest();
     }
 
@@ -61,11 +61,11 @@ class RenameTest extends PHPUnit_Framework_TestCase
     public function nameProvider()
     {
         return [
-            [12345],
-            [new \Stdclass],
+            [['name' => 12345]],
+            [[new \Stdclass]],
             [['12345']],
-            [true],
-            [false]
+            [[true]],
+            [[false]]
         ];
     }
 }

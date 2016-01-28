@@ -16,7 +16,8 @@ class CreateSnapshotTest extends PHPUnit_Framework_TestCase
      */
     public function testEnsureRequestCreatedSuccessfully()
     {
-        $createSnapshot = new CreateSnapshot('my-snapshot');
+        $params = ['name' => 'my-snapshot'];
+        $createSnapshot = new CreateSnapshot($params);
         $createSnapshot->setId(12345);
         $headers = [
             'Content-type' => 'application/json',
@@ -40,7 +41,8 @@ class CreateSnapshotTest extends PHPUnit_Framework_TestCase
      */
     public function testEnsureRuntimeExceptionThrownWhenIdIsNotSet()
     {
-        $createSnapshot = new CreateSnapshot('my-snapshot');
+        $params = ['name' => 'my-snapshot'];
+        $createSnapshot = new CreateSnapshot($params);
         $createSnapshot->getRequest();
     }
 
@@ -61,11 +63,11 @@ class CreateSnapshotTest extends PHPUnit_Framework_TestCase
     public function snapshotProvider()
     {
         return [
-            [true],
-            [false],
+            [[true]],
+            [[false]],
             [['my-snapshot']],
-            [12345],
-            [new \Stdclass]
+            [[12345]],
+            [[new \Stdclass]]
         ];
     }
 }

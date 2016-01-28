@@ -16,7 +16,8 @@ class RestoreTest extends PHPUnit_Framework_TestCase
      */
     public function testEnsureRequestIsCreatedSuccessfully()
     {
-        $restore = new Restore(51234);
+        $params = ['image' => 51234];
+        $restore = new Restore($params);
         $restore->setId(12345);
         $headers = [
             'Content-type' => 'application/json',
@@ -38,7 +39,7 @@ class RestoreTest extends PHPUnit_Framework_TestCase
      */
     public function testEnsureRequestIsCreatedSuccessfullyWithSlug()
     {
-        $restore = new Restore('14-04-x64');
+        $restore = new Restore(['image' => '14-04-x64']);
         $restore->setId(12345);
         $headers = [
             'Content-type' => 'application/json',
@@ -63,7 +64,7 @@ class RestoreTest extends PHPUnit_Framework_TestCase
      */
     public function testEnsureInvalidArgumentExceptionIsThrown()
     {
-        $restore = new Restore(new \Stdclass);
+        $restore = new Restore(['image' => new \Stdclass]);
         $restore->setId(12345);
         $restore->getRequest();
     }
@@ -75,7 +76,7 @@ class RestoreTest extends PHPUnit_Framework_TestCase
      */
     public function testEnsureRuntimeExceptionIsThrownForMissingId()
     {
-        $restore = new Restore(12345);
+        $restore = new Restore(['image' => 12345]);
         $restore->getRequest();
     }
 }

@@ -34,15 +34,19 @@ class Restore extends Action
     /**
      * Constructor for Restore Action
      *
-     * @param int image
+     * @param Array values 
      */
-    public function __construct($image)
+    public function __construct(Array $values)
     {
-        if (!is_numeric($image) && !is_string($image)) {
+        if (!isset($values['image'])) {
+            throw new InvalidArgumentException('Require value "image" is not present');
+        }
+
+        if (!is_numeric($values['image']) && !is_string($values['image'])) {
             throw new InvalidArgumentException('Image parameter must be an ID or a string');
         }
 
-        $this->image = $image;
+        $this->image = $values['image'];
     }
 
     /**

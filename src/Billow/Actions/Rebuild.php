@@ -34,15 +34,19 @@ class Rebuild extends Action
     /**
      * Constructor for rebuild action
      *
-     * @param mixed image
+     * @param Array values
      * @throws \InvalidArgumentException
      */
-    public function __construct($image)
+    public function __construct(Array $values)
     {
-        if (!is_numeric($image) && !is_string($image)) {
+        if (!isset($values['image'])) {
+            throw new InvalidArgumentException('Required value "image" is not present');
+        }
+
+        if (!is_numeric($values['image']) && !is_string($values['image'])) {
             throw new InvalidArgumentException("Image argument must be a slug or ID");
         }
-        $this->image = $image;
+        $this->image = $values['image'];
     }
 
     /**

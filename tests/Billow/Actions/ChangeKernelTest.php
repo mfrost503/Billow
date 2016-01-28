@@ -16,7 +16,8 @@ class ChangeKernelTest extends PHPUnit_Framework_TestCase
      */
     public function testEnsureRequestCreatedSuccessfullyWithKernelId()
     {
-        $changeKernel = new ChangeKernel(991);
+        $params = ['kernel' => 991];
+        $changeKernel = new ChangeKernel($params);
         $changeKernel->setId(12345);
         $headers = [
             'Content-type' => 'application/json',
@@ -40,7 +41,8 @@ class ChangeKernelTest extends PHPUnit_Framework_TestCase
      */
     public function testEnsureRuntimeExceptionThrownForMissingId()
     {
-        $changeKernel = new ChangeKernel(991);
+        $params = ['kernel' => 991];
+        $changeKernel = new ChangeKernel($params);
         $changeKernel->getRequest();
     }
 
@@ -61,10 +63,10 @@ class ChangeKernelTest extends PHPUnit_Framework_TestCase
     public function kernelProvider()
     {
         return [
-            ['this is a test'],
-            [true],
-            [false],
-            [new \Stdclass],
+            [['kernel' => 'this is a test']],
+            [[true]],
+            [[false]],
+            [[new \Stdclass]],
             [[1235]]
         ];
     }

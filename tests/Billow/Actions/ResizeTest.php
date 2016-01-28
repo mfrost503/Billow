@@ -16,7 +16,11 @@ class ResizeTest extends PHPUnit_Framework_TestCase
      */
     public function testEnsureRequestCreatedSuccessfullyWithDisk()
     {
-        $resize = new Resize('40gb', true);
+        $params = [
+            'size' => '40gb',
+            'disk' => true
+        ]; 
+        $resize = new Resize($params);
         $resize->setId(12345);
         $headers = [
             'Content-type' => 'application/json',
@@ -39,7 +43,11 @@ class ResizeTest extends PHPUnit_Framework_TestCase
      */
     public function testEnsureRequestCreatedSuccessfullyWithoutDisk()
     {
-        $resize = new Resize('40gb', false);
+        $params = [
+            'size' => '40gb',
+            'disk' => false
+        ]; 
+        $resize = new Resize($params);
         $resize->setId(12345);
         $headers = [
             'Content-type' => 'application/json',
@@ -64,7 +72,11 @@ class ResizeTest extends PHPUnit_Framework_TestCase
      */
     public function testEnsureRuntimeExceptionThrownWhenIdIsNull()
     {
-        $resize = new Resize('40gb', false);
+        $params = [
+            'size' => '40gb',
+            'disk' => true
+        ]; 
+        $resize = new Resize($params);
         $resize->getRequest();
     }
 
@@ -76,7 +88,7 @@ class ResizeTest extends PHPUnit_Framework_TestCase
      */
     public function testEnsureArgumentExceptionThrownForNonStringSize($size)
     {
-        $resize = new Resize($size, false);
+        $resize = new Resize($size);
     }
 
     /**
@@ -87,7 +99,7 @@ class ResizeTest extends PHPUnit_Framework_TestCase
      */
     public function testEnsureArgumentExceptionThrownForNonBoolDisk($disk)
     {
-        $resize = new Resize('40gb', $disk);
+        $resize = new Resize($disk);
     }
 
     /**
@@ -97,9 +109,9 @@ class ResizeTest extends PHPUnit_Framework_TestCase
     public function invalidSizeProvider()
     {
         return [
-            [new \Stdclass],
-            [12345],
-            [true]
+            [['size' => new \Stdclass]],
+            [['size' => 12345]],
+            [['size' => true]]
         ];
     }
 
@@ -110,9 +122,9 @@ class ResizeTest extends PHPUnit_Framework_TestCase
     public function invalidDiskProvider()
     {
         return [
-            [new \Stdclass],
-            ['true'],
-            [12345]
+            [['size' => '40gb', 'disk' => new \Stdclass]],
+            [['size' => '40gb', 'disk' => 'true']],
+            [['size' => '40gb', 'disk' => 12345]]
         ];
     }
 }

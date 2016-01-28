@@ -34,15 +34,20 @@ class ChangeKernel extends Action
     /**
      * Constructor for change kernel action
      *
-     * @param int kernel
+     * @param array values
      * @throws \InvalidArgumentException
      */
-    public function __construct($kernel)
+    public function __construct(Array $values)
     {
-        if (!is_int($kernel)) {
+        if (!isset($values['kernel'])) {
             throw new InvalidArgumentException('Kernel argument must be an integer');
         }
-        $this->kernel = $kernel;
+
+        if (!is_int($values['kernel'])) {
+            throw new InvalidArgumentException('Required value "kernel" is not present');
+        }
+
+        $this->kernel = $values['kernel'];
     }
 
     /**

@@ -41,21 +41,24 @@ class Resize extends Action
     /**
      * Constructor for the Resize Action
      *
-     * @param bool disk
-     * @param string size
+     * @param Array values
      */
-    public function __construct($size, $disk = true)
+    public function __construct(Array $values)
     {
-        if (!is_string($size)) {
+        if (!isset($values['size'])) {
+            throw new InvalidArgumentException('Required value "size" is not present');
+        }
+
+        if (!is_string($values['size'])) {
             throw new InvalidArgumentException('The size parameter must be a string (slug)');
         }
 
-        if (!is_bool($disk)) {
+        if (isset($values['disk']) && !is_bool($values['disk'])) {
             throw new InvalidArgumentException('The disk parameter must be a boolean');
         }
 
-        $this->size = $size;
-        $this->disk = $disk;
+        $this->size = $values['size'];
+        $this->disk = (isset($values['disk'])) ? $values['disk'] : true;
     }
 
     /**

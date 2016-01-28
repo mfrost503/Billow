@@ -16,7 +16,8 @@ class RebuildTest extends PHPUnit_Framework_TestCase
      */
     public function testEnsureRequestCreatedSuccessfullyWithInt()
     {
-        $rebuild = new Rebuild(12352343);
+        $params = ['image' => 12352343];
+        $rebuild = new Rebuild($params);
         $rebuild->setId(12345);
         $headers = [
             'Content-type' => 'application/json',
@@ -38,7 +39,7 @@ class RebuildTest extends PHPUnit_Framework_TestCase
      */
     public function testEnsureRequestCreatedSuccessfullyWithString()
     {
-        $rebuild = new Rebuild('14-04-x64');
+        $rebuild = new Rebuild(['image' => '14-04-x64']);
         $rebuild->setId(12345);
         $headers = [
             'Content-type' => 'application/json',
@@ -62,7 +63,7 @@ class RebuildTest extends PHPUnit_Framework_TestCase
      */
     public function testRuntimeExceptionThrownWhenIdIsBlank()
     {
-        $rebuild = new Rebuild(1235355);
+        $rebuild = new Rebuild(['image' => 1235355]);
         $rebuild->getRequest();
     }
 
@@ -84,9 +85,9 @@ class RebuildTest extends PHPUnit_Framework_TestCase
     public function imageProvider()
     {
         return [
-            [new \Stdclass],
-            [true],
-            [false],
+            [[new \Stdclass]],
+            [[true]],
+            [[false]],
             [['123', 123, '14-04-x64']]
         ];
     }

@@ -34,16 +34,20 @@ class CreateSnapshot extends Action
     /**
      * Constructor for the create snapshot action
      *
-     * @param string name
+     * @param Array values
      * @throws \InvalidArgumentException
      */
-    public function __construct($name)
+    public function __construct(Array $values)
     {
-        if (!is_string($name)) {
+        if (!isset($values['name'])) {
+            throw new InvalidArgumentException('Required value "Name" is not present');
+        }
+
+        if (!is_string($values['name'])) {
             throw new InvalidArgumentException('Name parameter must be a string');
         }
 
-        $this->name = $name;
+        $this->name = $values['name'];
     }
 
     /**

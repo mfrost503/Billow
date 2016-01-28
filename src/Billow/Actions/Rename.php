@@ -34,15 +34,20 @@ class Rename extends Action
     /**
      * Constructor for the rename action
      *
-     * @param string name
+     * @param Array values 
      * @throws \InvalidArgumentException
      */
-    public function __construct($name)
+    public function __construct(Array $values)
     {
-        if (!is_string($name)) {
+        if (!isset($values['name'])) {
+            throw new InvalidArgumentException('Require value "name" is not present');
+        }
+
+        if (!is_string($values['name'])) {
             throw new InvalidArgumentException('Name argument must be a string');
         }
-        $this->name = $name;
+
+        $this->name = $values['name'];
     }
     /**
      * Return the body of the request
