@@ -111,7 +111,8 @@ class ResizeTest extends PHPUnit_Framework_TestCase
         return [
             [['size' => new \Stdclass]],
             [['size' => 12345]],
-            [['size' => true]]
+            [['size' => true]],
+            [['40gb']]
         ];
     }
 
