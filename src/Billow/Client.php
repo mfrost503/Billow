@@ -3,7 +3,7 @@ namespace Billow;
 use Exception;
 use GuzzleHttp\Client as HttpClient;
 use GuzzleHttp\Exception\RequestException;
-use GuzzleHttp\Message\RequestInterface;
+use Psr\Http\Message\RequestInterface;
 
 /**
  * @author Matt Frost<mfrost.design@gmail.com>

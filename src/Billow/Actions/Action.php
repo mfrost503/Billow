@@ -1,7 +1,7 @@
 <?php
 namespace Billow\Actions;
-use GuzzleHttp\Message\Request;
-use GuzzleHttp\Stream\Stream;
+use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Psr7\Stream;
 use RuntimeException;
 
 /**
@@ -65,12 +65,12 @@ class Action implements ActionInterface
         }
 
         $endpoint = str_replace('[:id:]', $this->id, self::ENDPOINT);
-        $stream = Stream::factory($body);
+
         return new Request(
             static::METHOD,
             $endpoint,
             $headers,
-            $stream
+            $body
         );
     }
 }

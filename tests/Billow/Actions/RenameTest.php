@@ -1,7 +1,7 @@
 <?php
 namespace Billow\Tests;
 use Billow\Actions\Rename;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author Matt Frost<mfrost.design@gmail.com>
@@ -9,7 +9,7 @@ use PHPUnit_Framework_TestCase;
  * @subpackage Tests
  * @license http://opensource.org/licenses/MIT MIT
  */
-class RenameTest extends PHPUnit_Framework_TestCase
+class RenameTest extends TestCase
 {
     /**
      * Ensure request is created successfully with a new name
@@ -28,7 +28,7 @@ class RenameTest extends PHPUnit_Framework_TestCase
         ]);
         $request = $rename->getRequest($headers);
         $this->assertEquals($expectedBody, $request->getBody()->getContents());
-        $this->assertEquals('/v2/droplets/12345/actions', $request->getPath());
+        $this->assertEquals('/v2/droplets/12345/actions', $request->getUri()->getPath());
         $this->assertContains($headers['Content-type'], $request->getHeaders()['Content-type']);
         $this->assertContains($headers['Authorization'], $request->getHeaders()['Authorization']);
     }

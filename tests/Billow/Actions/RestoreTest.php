@@ -1,7 +1,7 @@
 <?php
 namespace Billow\Tests;
 use Billow\Actions\Restore;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author Matt Frost<mfrost.design@gmail.com>
@@ -9,7 +9,7 @@ use PHPUnit_Framework_TestCase;
  * @subpackage Tests
  * @license http://opensource.org/licenses/MIT MIT
  */
-class RestoreTest extends PHPUnit_Framework_TestCase
+class RestoreTest extends TestCase
 {
     /**
      * Ensure the request is created successfully with integer
@@ -29,7 +29,7 @@ class RestoreTest extends PHPUnit_Framework_TestCase
         ]);
         $request = $restore->getRequest($headers);
         $this->assertEquals($expectedBody, $request->getBody()->getContents());
-        $this->assertEquals('/v2/droplets/12345/actions', $request->getPath());
+        $this->assertEquals('/v2/droplets/12345/actions', $request->getUri()->getPath());
         $this->assertContains($headers['Content-type'], $request->getHeaders()['Content-type']);
         $this->assertContains($headers['Authorization'], $request->getHeaders()['Authorization']);
     }
@@ -51,7 +51,7 @@ class RestoreTest extends PHPUnit_Framework_TestCase
         ]);
         $request = $restore->getRequest($headers);
         $this->assertEquals($expectedBody, $request->getBody()->getContents());
-        $this->assertEquals('/v2/droplets/12345/actions', $request->getPath());
+        $this->assertEquals('/v2/droplets/12345/actions', $request->getUri()->getPath());
         $this->assertContains($headers['Content-type'], $request->getHeaders()['Content-type']);
         $this->assertContains($headers['Authorization'], $request->getHeaders()['Authorization']);
     }

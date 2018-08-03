@@ -2,7 +2,7 @@
 namespace Billow\Tests;
 use Billow\Actions\Action;
 use Billow\Actions\ActionInterface;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author Matt Frost<mfrost.design@gmail.com>
@@ -10,7 +10,7 @@ use PHPUnit_Framework_TestCase;
  * @package Tests
  * @license http://opensource.org/licenses/MIT MIT
  */
-class ActionTest extends PHPUnit_Framework_TestCase
+class ActionTest extends TestCase
 {
     /**
      * @var \Billow\Actions\Action
@@ -47,7 +47,7 @@ class ActionTest extends PHPUnit_Framework_TestCase
         $request = $this->action->getRequest($headers, $body);
         $requestHeaders = $request->getHeaders();
         $this->assertEquals($body, $request->getBody()->getContents());
-        $this->assertEquals('/v2/droplets/12345/actions', $request->getPath());
+        $this->assertEquals('/v2/droplets/12345/actions', $request->getUri()->getPath());
         $this->assertContains($headers['Content-type'], $requestHeaders['Content-type']);
         $this->assertContains($headers['Authorization'], $requestHeaders['Authorization']);
     } 

@@ -1,7 +1,7 @@
 <?php
 namespace Billow\Test;
 use Billow\Actions\EnableIPv6;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author Matt Frost<mfrost.design@gmail.com>
@@ -9,7 +9,7 @@ use PHPUnit_Framework_TestCase;
  * @subpackage Tests
  * @license http://opensource.org/licenses/MIT MIT
  */
-class EnableIPv6Test extends PHPUnit_Framework_TestCase
+class EnableIPv6Test extends TestCase
 {
     /**
      * @var \Billow\Actions\EnableIPv6
@@ -45,7 +45,7 @@ class EnableIPv6Test extends PHPUnit_Framework_TestCase
         $expectedBody = json_encode(['type' => 'enable_ipv6']);
         $request = $this->enableIPv6->getRequest($headers);
         $this->assertEquals($expectedBody, $request->getBody()->getContents());
-        $this->assertEquals('/v2/droplets/12345/actions', $request->getPath());
+        $this->assertEquals('/v2/droplets/12345/actions', $request->getUri()->getPath());
         $this->assertContains($headers['Content-type'], $request->getHeaders()[
 'Content-type']);
         $this->assertContains($headers['Authorization'], $request->getHeaders()['Authorization']);

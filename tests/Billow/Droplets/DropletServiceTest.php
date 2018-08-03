@@ -1,6 +1,6 @@
 <?php
 namespace Billow\Tests;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Billow\DropletService;
 use Billow\Droplets\Ubuntu;
 use Billow\Droplets\DropletFactory;
@@ -14,7 +14,7 @@ use GuzzleHttp\Message\Response;
  * @package Billow
  * @subpackage Tests
  */
-class DropletServiceTest extends PHPUnit_Framework_TestCase
+class DropletServiceTest extends TestCase
 {
     /**
      * @var \Billow\Client $mockClient
@@ -51,19 +51,26 @@ class DropletServiceTest extends PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->mockClient = $this->getMock('\Billow\Client', ['get', 'post', 'send']);
+        $this->mockClient = $this->getMockBuilder('\Billow\Client')
+            ->setMethods( ['get', 'post', 'send'])
+            ->disableOriginalConstructor()
+            ->getMock();
+
         $this->mockUbuntu = $this->getMockBuilder('\Billow\Droplets\Ubuntu')
             ->setMethods(['toJson'])
             ->disableOriginalConstructor()
             ->getMock();
-        $this->mockResponse = $this->getMockBuilder('\GuzzleHttp\Message\Response')
+
+        $this->mockResponse = $this->getMockBuilder('\GuzzleHttp\Psr7\Response')
             ->setMethods(['getStatusCode', 'getBody', 'hasResponse'])
             ->disableOriginalConstructor()
             ->getMock();
+
         $this->mockException = $this->getMockBuilder('\GuzzleHttp\Exception\RequestException')
             ->setMethods(['hasResponse', 'getResponse', 'getCode'])
             ->disableOriginalConstructor()
             ->getMock();
+
         $this->ubuntuData = file_get_contents('tests/Billow/fixtures/ubuntu-retrieve-droplet-response.json');
         $this->retrieveAllData = file_get_contents('tests/Billow/fixtures/retrieve-all-response.json');
     }
@@ -435,10 +442,15 @@ class DropletServiceTest extends PHPUnit_Framework_TestCase
         $droplet = $factory->getDroplet($data['droplet']);
         $headers = ['Content-type' => 'application/json'];
 
-        $mockRequest = $this->getMockBuilder('\GuzzleHttp\Message\Request')
+        $mockRequest = $this->getMockBuilder('\GuzzleHttp\Psr7\Request')
             ->disableOriginalConstructor()
             ->getMock();
-        $mockAction = $this->getMock('\Billow\Actions\EnableBackups', ['getRequest', 'getBody']);
+
+        $mockAction = $this->getMockBuilder('\Billow\Actions\EnableBackups')
+            ->setMethods(['getRequest', 'getBody'])
+            ->disableOriginalConstructor()
+            ->getMock();
+
         $mockAction->expects($this->once())
             ->method('getBody')
             ->will($this->returnValue(json_encode(['type'=>'enable_backups'])));

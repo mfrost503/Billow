@@ -1,7 +1,7 @@
 <?php
 namespace Billow\Tests;
 use Billow\Client;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author Matt Frost<mfrost.design@gmail.com>
@@ -9,7 +9,7 @@ use PHPUnit_Framework_TestCase;
  * @subpackage Tests
  * @license http://opensource.org/licenses/MIT MIT
  */
-class ClientTest extends PHPUnit_Framework_TestCase
+class ClientTest extends TestCase
 {
     /**
      * @var GuzzleHttp\Client
@@ -31,10 +31,15 @@ class ClientTest extends PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->mockClient = $this->getMock('\GuzzleHttp\Client', ['get', 'post','send']);
-        $this->mockResponse = $this->getMockBuilder('\GuzzleHttp\Message\Response')
+        $this->mockClient = $this->getMockBuilder('\GuzzleHttp\Client')
+            ->setMethods(['get', 'post','send'])
             ->disableOriginalConstructor()
             ->getMock();
+
+        $this->mockResponse = $this->getMockBuilder('\GuzzleHttp\Psr7\Response')
+            ->disableOriginalConstructor()
+            ->getMock();
+
         $this->mockException = $this->getMockBuilder('\GuzzleHttp\Exception\RequestException')
             ->setMethods(['hasResponse', 'getResponse', 'getMessage', 'getCode'])
             ->disableOriginalConstructor()
@@ -69,7 +74,7 @@ class ClientTest extends PHPUnit_Framework_TestCase
         $client = new Client();
         $httpClient = $client->getHttpClient();
         $this->assertInstanceOf('\GuzzleHttp\Client', $httpClient);
-        $this->assertEquals($client::BASEURL, $httpClient->getBaseUrl());
+        $this->assertEquals($client::BASEURL, $httpClient->getConfig('base_url'));
     }
 
     /**
@@ -79,14 +84,16 @@ class ClientTest extends PHPUnit_Framework_TestCase
     {
         $url = 'droplets/12345';
         $options = ['headers' => ['Content-type' => 'application/json']];
+
         $this->mockClient->expects($this->once())
             ->method('get')
             ->with($url, $options)
             ->will($this->returnValue($this->mockResponse));
+
         $client = new Client();
         $client->setHttpClient($this->mockClient);
         $response = $client->get($url, $options);
-        $this->assertInstanceOf('\GuzzleHttp\Message\Response', $response);
+        $this->assertInstanceOf('\GuzzleHttp\Psr7\Response', $response);
     }
 
     /**
@@ -112,7 +119,7 @@ class ClientTest extends PHPUnit_Framework_TestCase
         $client = new Client();
         $client->setHttpClient($this->mockClient);
         $response = $client->post($url, $options);
-        $this->assertInstanceOf('\GuzzleHttp\Message\Response', $response);
+        $this->assertInstanceOf('\GuzzleHttp\Psr7\Response', $response);
     }
 
     /**
@@ -192,7 +199,7 @@ class ClientTest extends PHPUnit_Framework_TestCase
      */
     public function testEnsureSendMethodWorksCorrectly()
     {
-        $request = $this->getMockBuilder('\GuzzleHttp\Message\Request')
+        $request = $this->getMockBuilder('\GuzzleHttp\Psr7\Request')
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -204,7 +211,7 @@ class ClientTest extends PHPUnit_Framework_TestCase
         $client = new Client();
         $client->setHttpClient($this->mockClient);
         $response = $client->send($request);
-        $this->assertInstanceOf('\GuzzleHttp\Message\ResponseInterface', $response);
+        $this->assertInstanceOf('\Psr\Http\Message\ResponseInterface', $response);
         $this->assertSame($this->mockResponse, $response);
     }
 
@@ -215,7 +222,7 @@ class ClientTest extends PHPUnit_Framework_TestCase
      */
     public function testEnsureSendRequestExceptionIsRethrown()
     {
-        $request = $this->getMockBuilder('\GuzzleHttp\Message\Request')
+        $request = $this->getMockBuilder('\GuzzleHttp\Psr7\Request')
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -236,7 +243,7 @@ class ClientTest extends PHPUnit_Framework_TestCase
      */
     public function testEnsureSendExceptionIsRethrown()
     {
-        $request = $this->getMockBuilder('\GuzzleHttp\Message\Request')
+        $request = $this->getMockBuilder('\GuzzleHttp\Psr7\Request')
             ->disableOriginalConstructor()
             ->getMock();
 

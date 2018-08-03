@@ -2,3 +2,4 @@ vendor/
 .env*
 examples/
 coverage/
+.phpunit.result.cache

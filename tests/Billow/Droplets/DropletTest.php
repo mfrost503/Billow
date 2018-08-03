@@ -2,7 +2,7 @@
 namespace Billow\Tests;
 use Billow\Droplets\Ubuntu;
 use Billow\Droplets\DropletFactory;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author Matt Frost<mfrost.design@gmail.com>
@@ -10,7 +10,7 @@ use PHPUnit_Framework_TestCase;
  * @subpackage Tests
  * @license http://opensource.org/licenses/MIT MIT
  */
-class DropletTest extends PHPUnit_Framework_TestCase
+class DropletTest extends TestCase
 {
     /**
      * @var string

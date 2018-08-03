@@ -1,6 +1,6 @@
 <?php
 namespace Billow;
-use GuzzleHttp\Message\RequestInterface;
+use Psr\Http\Message\RequestInterface;
 
 /**
  * @author Matt Frost<mfrost.design@gmail.com>

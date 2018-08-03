@@ -1,7 +1,7 @@
 <?php
 namespace Billow\Tests;
 use Billow\Actions\Resize;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @author Matt Frost<mfrost.design@gmail.com>
@@ -9,7 +9,7 @@ use PHPUnit_Framework_TestCase;
  * @subpackage Tests
  * @license http://opensource.org/licenses/MIT MIT
  */
-class ResizeTest extends PHPUnit_Framework_TestCase
+class ResizeTest extends TestCase
 {
     /**
      * Ensure request is create successfully with disk true
@@ -33,7 +33,7 @@ class ResizeTest extends PHPUnit_Framework_TestCase
         ]);
         $request = $resize->getRequest($headers);
         $this->assertEquals($expectedBody, $request->getBody()->getContents());
-        $this->assertEquals('/v2/droplets/12345/actions', $request->getPath());
+        $this->assertEquals('/v2/droplets/12345/actions', $request->getUri()->getPath());
         $this->assertContains($headers['Content-type'], $request->getHeaders()['Content-type']);
         $this->assertContains($headers['Authorization'], $request->getHeaders()['Authorization']);
     }
@@ -60,7 +60,7 @@ class ResizeTest extends PHPUnit_Framework_TestCase
         ]);
         $request = $resize->getRequest($headers);
         $this->assertEquals($expectedBody, $request->getBody()->getContents());
-        $this->assertEquals('/v2/droplets/12345/actions', $request->getPath());
+        $this->assertEquals('/v2/droplets/12345/actions', $request->getUri()->getPath());
         $this->assertContains($headers['Content-type'], $request->getHeaders()['Content-type']);
         $this->assertContains($headers['Authorization'], $request->getHeaders()['Authorization']);
     }

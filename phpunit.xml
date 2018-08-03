@@ -2,22 +2,14 @@
 <phpunit
     colors="true"
     bootstrap="vendor/autoload.php"
-    printerFile="vendor/whatthejeff/nyancat-phpunit-resultprinter/src/NyanCat/PHPUnit/ResultPrinter.php"
-    printerClass="NyanCat\PHPUnit\ResultPrinter"
-    stopOnError="true"
-    stopOnFailure="true" 
+    stopOnError="false"
+    stopOnFailure="false" 
 >
     <testsuites>
         <testsuite name="Billow">
             <directory>./tests/</directory>
         </testsuite>
     </testsuites>
-
-    <filter>
-        <blacklist>
-            <directory>./vendor/</directory>
-        </blacklist>
-    </filter>
 
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
