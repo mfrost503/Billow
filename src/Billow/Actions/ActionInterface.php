@@ -25,5 +25,12 @@ interface ActionInterface
      * @param mixed $id
      */
     public function setId($id);
+
+    /**
+     * Method to get the Action body
+     *
+     * @return string
+     */
+    public function getBody();
 }
     

@@ -59,7 +59,7 @@ class Client implements ClientInterface
      *
      * @param string $url 
      * @param Array $options
-     * @return \GuzzleHttp\Message\ResponseInterface 
+     * @return \Psr\Http\Message\ResponseInterface 
      * @throws \GuzzleHttp\Exception\RequestException
      * @throws \Exception
      */

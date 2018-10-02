@@ -10,7 +10,7 @@ use RuntimeException;
  * @subpackage Actions
  * @license http://opensource.org/licenses/MIT MIT
  */
-class Action implements ActionInterface
+abstract class Action implements ActionInterface
 {
     /**
      * Endpoint for the action
@@ -58,10 +58,6 @@ class Action implements ActionInterface
 
         if (method_exists($this, 'getBody') && $body === '') {
             $body = $this->getBody();
-        }
-
-        if ($body === '' || json_decode($body, true) === []) {
-            throw new RuntimeException('Body cannot be empty');
         }
 
         $endpoint = str_replace('[:id:]', $this->id, self::ENDPOINT);

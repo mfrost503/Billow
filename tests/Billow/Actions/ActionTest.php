@@ -1,6 +1,6 @@
 <?php
 namespace Billow\Tests;
-use Billow\Actions\Action;
+use Billow\Actions\Reboot;
 use Billow\Actions\ActionInterface;
 use PHPUnit\Framework\TestCase;
 
@@ -13,7 +13,7 @@ use PHPUnit\Framework\TestCase;
 class ActionTest extends TestCase
 {
     /**
-     * @var \Billow\Actions\Action
+     * @var \Billow\Actions\Resize
      */
     private $action;
 
@@ -22,7 +22,7 @@ class ActionTest extends TestCase
      */
     protected function setUp()
     {
-        $this->action = new Action();
+        $this->action = new Reboot();
     }
 
     /**
@@ -66,16 +66,4 @@ class ActionTest extends TestCase
         $body = json_encode(['type' => 'testAction']);
         $request = $this->action->getRequest($headers, $body);
     }    
-
-    /**
-     * Ensure an empty body throws a runtime exception
-     *
-     * @expectedException \RuntimeException
-     */
-    public function testEmptyBodyThrowsRuntimeException()
-    {
-        $this->action->setId(12345);
-        $headers = ['Content-type' => 'application/json'];
-        $this->action->getRequest($headers);
-    } 
 }
