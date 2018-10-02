@@ -34,7 +34,7 @@ class Rename extends Action
     /**
      * Constructor for the rename action
      *
-     * @param Array values 
+     * @param Array $values 
      * @throws \InvalidArgumentException
      */
     public function __construct(Array $values)

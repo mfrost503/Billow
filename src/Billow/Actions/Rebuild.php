@@ -34,7 +34,7 @@ class Rebuild extends Action
     /**
      * Constructor for rebuild action
      *
-     * @param Array values
+     * @param Array $values
      * @throws \InvalidArgumentException
      */
     public function __construct(Array $values)

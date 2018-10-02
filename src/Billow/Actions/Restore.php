@@ -34,7 +34,7 @@ class Restore extends Action
     /**
      * Constructor for Restore Action
      *
-     * @param Array values 
+     * @param Array $values 
      */
     public function __construct(Array $values)
     {

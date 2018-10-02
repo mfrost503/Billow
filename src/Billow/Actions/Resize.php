@@ -41,7 +41,7 @@ class Resize extends Action
     /**
      * Constructor for the Resize Action
      *
-     * @param Array values
+     * @param Array $values
      */
     public function __construct(Array $values)
     {

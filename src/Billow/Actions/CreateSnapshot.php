@@ -34,7 +34,7 @@ class CreateSnapshot extends Action
     /**
      * Constructor for the create snapshot action
      *
-     * @param Array values
+     * @param Array $values
      * @throws \InvalidArgumentException
      */
     public function __construct(Array $values)

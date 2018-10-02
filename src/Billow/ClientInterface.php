@@ -1,6 +1,6 @@
 <?php
 namespace Billow;
-use Psr\Http\Message\RequestInterface;
+use \Psr\Http\Message\RequestInterface;
 
 /**
  * @author Matt Frost<mfrost.design@gmail.com>
@@ -13,16 +13,16 @@ interface ClientInterface
     /**
      * Get method that will be used to make a get HTTP Request
      *
-     * @param string url
-     * @param Array options
+     * @param string $url
+     * @param Array $options
      */
     public function get($url = null, Array $options = []);
 
     /**
      * Method that must be implement to make an HTTP Post request
      *
-     * @param string url
-     * @param Array options
+     * @param string $url
+     * @param Array $options
      */
     public function post($url = null, Array $options = []);
 
@@ -30,7 +30,7 @@ interface ClientInterface
      * Method that takes in a request parameter and sends it as an
      * HTTP Request
      *
-     * @param \GuzzleHttp\Message\RequestInterface request
+     * @param \Psr7\Http\Message\RequestInterface $request
      */
     public function send(RequestInterface $request);
 }

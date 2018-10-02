@@ -34,7 +34,7 @@ class ChangeKernel extends Action
     /**
      * Constructor for change kernel action
      *
-     * @param array values
+     * @param array $values
      * @throws \InvalidArgumentException
      */
     public function __construct(Array $values)

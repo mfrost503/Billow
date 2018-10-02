@@ -15,7 +15,7 @@ interface ActionInterface
      *
      * @param Array $headers
      * @param string $body
-     * @return \GuzzleHttp\Message\Request 
+     * @return \GuzzleHttp\Psr7\Request 
      */
     public function getRequest(Array $headers, $body);
 }

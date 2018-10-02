@@ -35,9 +35,9 @@ class Client implements ClientInterface
     /**
      * Wrapper for the GuzzleHttp\Client::get() method
      *
-     * @param $url string
+     * @param string $url
      * @param Array $options
-     * @return \GuzzleHttp\Message\ResponseInterface 
+     * @return \Psr7\Http\Message\ResponseInterface 
      * @throws \GuzzleHttp\Exception\RequestException
      * @throws \Exception
      */
@@ -57,7 +57,7 @@ class Client implements ClientInterface
     /**
      * Wrapper for the GuzzleHttp\Client::post() method
      *
-     * @param $url string
+     * @param string $url 
      * @param Array $options
      * @return \GuzzleHttp\Message\ResponseInterface 
      * @throws \GuzzleHttp\Exception\RequestException
@@ -79,8 +79,8 @@ class Client implements ClientInterface
     /**
      * Method to send a request object via HTTP and retrieve a response
      *
-     * @param \GuzzleHttp\Message\RequestInterface $request
-     * @return \GuzzleHttp\Message\ResponseInterface
+     * @param \Psr7\Http\Message\RequestInterface $request
+     * @return \Psr7\Http\Message\ResponseInterface
      * @throws \GuzzleHttp\Exception\RequestException
      * @throws \Exception
      */
@@ -100,7 +100,7 @@ class Client implements ClientInterface
     /**
      * Method to set the HttpClient
      *
-     * @param \GuzzleHttp\Client
+     * @param \GuzzleHttp\Client $client
      */
     public function setHttpClient(HttpClient $client)
     {

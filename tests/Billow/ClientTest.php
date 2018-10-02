@@ -17,7 +17,7 @@ class ClientTest extends TestCase
     private $mockClient;
 
     /**
-     * @var GuzzleHttp\Message\Response
+     * @var GuzzleHttp\Psr7\Response
      */
     private $mockResponse;
 
