@@ -24,14 +24,14 @@ class DropletService
     /**
      * Droplet Factory
      *
-     * @var \Billow\Droplets\DropletFactoryInterface
+     * @var \Billow\Droplets\DropletFactoryInterface $factory
      */
     private $factory;
 
     /**
      * Client to make http requests
      *
-     * @var \Billow\ClientInterface
+     * @var \Billow\ClientInterface $client
      */
     private $client;
 
@@ -87,7 +87,7 @@ class DropletService
      *
      * @param Array $dropletRequest
      * @param Array $headers
-     * @return \GuzzleHttp\Message\ResponseInterface
+     * @return \Psr\Http\Message\ResponseInterface
      * @throws \Billow\Exceptions\ProvisionException
      */
     public function create(Array $dropletRequest, Array $headers = [])
@@ -146,9 +146,9 @@ class DropletService
     /**
      * Method to retrieve a paginated list of droplets
      *
-     * @param Array headers
-     * @param int per_page
-     * @param int page
+     * @param Array $headers
+     * @param int $per_page
+     * @param int $page
      * @return Array
      */
     public function retrieveAll(Array $headers = [], $per_page = 25, $page = 1)
@@ -189,7 +189,7 @@ class DropletService
      * @param \Billow\Droplets\DropletInterface
      * @param \Billow\Actions\ActionInterface $action
      * @param Array $headers
-     * @return \GuzzleHttp\Message\ResponseInterface
+     * @return \Psr\Http\Message\ResponseInterface
      */
     public function performAction(DropletInterface $droplet, ActionInterface $action, Array $headers = [])
     {

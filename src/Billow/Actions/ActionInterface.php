@@ -18,5 +18,12 @@ interface ActionInterface
      * @return \GuzzleHttp\Psr7\Request 
      */
     public function getRequest(Array $headers, $body);
+
+    /**
+     * Method to set the id for the request
+     *
+     * @param mixed $id
+     */
+    public function setId($id);
 }
     

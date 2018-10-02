@@ -12,7 +12,7 @@ interface DropletFactoryInterface
     /**
      * Method to retrieve a droplet from an Array of Data
      *
-     * @param Array dropletInfo
+     * @param Array $dropletInfo
      */
     public function getDroplet(Array $dropletInfo);
 }
