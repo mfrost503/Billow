@@ -206,7 +206,7 @@ class DropletService
     /**
      * Method to set the default Content-type if one is not sent
      *
-     * @param Array Headers
+     * @param Array $headers
      * @return Array
      */ 
     private function prepareHeaders(array $headers)
