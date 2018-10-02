@@ -63,11 +63,11 @@ class CreateSnapshotTest extends TestCase
     public function snapshotProvider()
     {
         return [
-            [[true]],
-            [[false]],
-            [['my-snapshot']],
-            [[12345]],
-            [[new \Stdclass]]
+            [['name' => true]],
+            [['name' => false]],
+            [['name' => 12345]],
+            [['name' => new \Stdclass]],
+            [['my-snapshot']]
         ];
     }
 }

@@ -79,5 +79,16 @@ class RestoreTest extends TestCase
         $restore = new Restore(['image' => 12345]);
         $restore->getRequest();
     }
+
+    /**
+     * Ensure InvalidArgumentException is thrown if image key is not set
+     *
+     * @expectedException \InvalidArgumentException
+     */
+    public function testMissingImageThrowsException()
+    {
+        $restore = new Restore([12345]);
+        $restore->getRequest();
+    }
 }
 

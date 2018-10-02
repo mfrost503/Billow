@@ -85,9 +85,9 @@ class RebuildTest extends TestCase
     public function imageProvider()
     {
         return [
-            [[new \Stdclass]],
-            [[true]],
-            [[false]],
+            [['image' => new \Stdclass]],
+            [['image' => true]],
+            [['image' => false]],
             [['123', 123, '14-04-x64']]
         ];
     }
