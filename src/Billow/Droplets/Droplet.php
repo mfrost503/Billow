@@ -15,119 +15,119 @@ abstract class Droplet
     /**
      * ID for the droplet
      *
-     * @var id
+     * @var string $id
      */
     private $id;
 
     /**
      * Name for the droplet
      *
-     * @var string name
+     * @var string $name
      */
     protected $name;
 
     /**
      * Region slug in which to deploy the box
      *
-     * @var string region
+     * @var string $region
      */
     protected $region;
 
     /**
      * Size of the box
      *
-     * @var string size
+     * @var string $size
      */
     protected $size;
 
     /**
      * Size slug of the droplet
      *
-     * @var string size_slug
+     * @var string $size_slug
      */
     protected $size_slug;
 
     /**
      * Image info for the droplet 
      *
-     * @var array image
+     * @var array $image
      */
     protected $image;
 
     /**
      * Memory for the droplet
      *
-     * @var int memory
+     * @var int $memory
      */
     protected $memory;
 
     /**
      * Virtual CPUS for the droplet
      *
-     * @var int vcpus
+     * @var int $vcpus
      */
     protected $vcpus;
 
     /**
      * Disk size for the droplet
      *
-     * @var int size
+     * @var int $size
      */
     protected $disk;
 
     /**
      * Lock status of droplet
      *
-     * @var bool locked
+     * @var bool $locked
      */
     protected $locked;
 
     /**
      * Status of the droplet
      *
-     * @var string status
+     * @var string $status
      */
     protected $status;
 
     /**
      * Kernel info for the droplet
      *
-     * @var array kernel
+     * @var array $kernel
      */
     protected $kernel;
 
     /**
      * Creation Date of the droplet
      *
-     * @var string created_at
+     * @var string $created_at
      */
     protected $created_at;
 
     /**
      * Features available on the droplet
      *
-     * @var array features
+     * @var array $features
      */
     protected $features;
 
     /**
      * Backup IDs for the droplet
      *
-     * @var array backup_ids
+     * @var array $backup_ids
      */
     protected $backup_ids;
 
     /**
      * Snapshot IDs for the droplet
      *
-     * @var array snapshot_ids
+     * @var array $snapshot_ids
      */
     protected $snapshot_ids;
 
     /**
      * Networks the droplet resides on
      *
-     * @var array networks
+     * @var array $networks
      */
     protected $networks;
 
