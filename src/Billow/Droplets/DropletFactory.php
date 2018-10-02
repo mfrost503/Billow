@@ -19,7 +19,7 @@ class DropletFactory implements DropletFactoryInterface
      */
     public function getDroplet(Array $dropletInfo)
     {
-        if ( !isset($dropletInfo['image']['distribution'])) {
+        if (!isset($dropletInfo['image']['distribution'])) {
             throw new InvalidArgumentException('Image information not found in droplet info');
         }
 

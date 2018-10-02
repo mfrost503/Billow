@@ -90,7 +90,7 @@ class DropletService
      * @return \GuzzleHttp\Message\ResponseInterface
      * @throws \Billow\Exceptions\ProvisionException
      */
-    public function create(Array $dropletRequest, Array $headers =[])
+    public function create(Array $dropletRequest, Array $headers = [])
     {
         $headers = $this->prepareHeaders($headers);
 
@@ -127,7 +127,7 @@ class DropletService
         $params = ['headers' => $headers];
         $client = $this->getClient();
         try {
-            $response = $client->get('droplets/' . $dropletId, $params);
+            $response = $client->get('droplets/'.$dropletId, $params);
             $factory = $this->getFactory();
             $dropletArray = json_decode($response->getBody(), true);
             return $factory->getDroplet($dropletArray['droplet']);
@@ -156,7 +156,7 @@ class DropletService
         $headers = $this->prepareHeaders($headers);
         $params = ['headers' => $headers];
         $client = $this->getClient();
-        $endpoint = 'droplets?page='. $page .'&per_page=' . $per_page;
+        $endpoint = 'droplets?page='.$page.'&per_page='.$per_page;
         $dropletArray = [];
         $dropletArray['droplets'] = [];
         $dropletArray['meta'] = [];
@@ -171,7 +171,7 @@ class DropletService
             $dropletArray['meta'] = $responseArray['meta'];
             $dropletArray['links'] = $responseArray['links'];
             return $dropletArray;
-        } catch(RequestException $e) {
+        } catch (RequestException $e) {
             $message = 'Retrieval of droplets failed';
             $code = 0;
             if ($e->hasResponse()) {
