@@ -30,7 +30,7 @@ interface ClientInterface
      * Method that takes in a request parameter and sends it as an
      * HTTP Request
      *
-     * @param \Psr7\Http\Message\RequestInterface $request
+     * @param \Psr\Http\Message\RequestInterface $request
      */
     public function send(RequestInterface $request);
 }
